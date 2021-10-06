@@ -1,0 +1,6 @@
+.idea/
+playground/
+playground.php
+playground.*
+
+/vendor/
