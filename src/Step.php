@@ -3,7 +3,7 @@
 namespace Edu\IU\Framework\GenericUpdater;
 
 
-use Edu\IU\Framework\GenericUpdater\Asset\AbstractAsset;
+use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 
 class Step
 {
@@ -11,7 +11,7 @@ class Step
     public $action;
     public $parameters;
 
-    public function __construct(AbstractAsset $asset, string $action, array $parameters = [])
+    public function __construct(Asset $asset, string $action, array $parameters = [])
     {
         $this->asset = $asset;
         $this->action = $action;
