@@ -1,0 +1,22 @@
+{
+  "name": "iu-webtech/framework-generic-updater",
+  "description": "An updater framework",
+  "type": "project",
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "Qiwen Zhu",
+      "email": "qiwzhu@iu.edu"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "iu-vpcm-dc/wcms-webservice": "dev-main",
+    "phpunit/phpunit": "^7.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Edu\\IU\\Framework\\GenericUpdater\\": "src"
+    }
+  }
+}
