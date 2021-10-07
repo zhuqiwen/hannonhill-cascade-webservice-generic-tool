@@ -3,7 +3,7 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
-abstract class AbstractAsset
+class Asset
 {
 
 }
