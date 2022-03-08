@@ -2,7 +2,6 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
-interface InterfaceAsset
+interface AssetInterface
 {
-
 }

@@ -2,7 +2,11 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
-trait TraitAsset
+use Edu\IU\Wcms\WebService\WCMSClient;
+
+trait AssetTrait
 {
+
+    protected WCMSClient $wcms;
 
 }
