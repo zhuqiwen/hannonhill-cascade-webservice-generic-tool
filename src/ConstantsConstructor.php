@@ -60,6 +60,8 @@ class ConstantsConstructor
         define("ASSET_METADATA_SET_FETCH", "metadataset");
         define("ASSET_PAGE_CONFIGURATION_SET_FETCH", "pageconfigurationset");
         define("ASSET_PAGE_FETCH", "page");
+        define("ASSET_TEMPLATE_FETCH", "template");
+        define("ASSET_SYMLINK_FETCH", "symlink");
 
         define("ASSET_CONTAINER_PAGE_CONFIGURATION_SET_FETCH", "pageconfigurationsetcontainer");
         define("ASSET_CONTAINER_SHARED_FIELD_FETCH", "sharedfieldcontainer");
