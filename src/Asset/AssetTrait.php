@@ -7,11 +7,11 @@ use Edu\IU\Wcms\WebService\WCMSClient;
 trait AssetTrait
 {
 
-    protected WCMSClient $wcms;
+    protected $wcms;
     public $oldAsset;
     public $newAsset;
-    public $id;
-    public $path;
-    public $siteName;
 
+    public $assetTypeFetch;
+    public $assetTypeCreate;
+    public $assetTypeDisplay;
 }
