@@ -20,8 +20,8 @@ class Asset implements AssetInterface
     {
         if($this->assetExists($path))
         {
-            $assetType = $this->assetTypeCreate;
-            $this->oldAsset = $this->wcms->fetchAsset($path, $this->assetTypeFetch)->$assetType;
+            $asset = $this->wcms->fetchAsset($path, $this->assetTypeFetch);
+            $this->oldAsset = $asset->{$this->assetTypeCreate};
         }
         else
         {
@@ -31,7 +31,6 @@ class Asset implements AssetInterface
 
     public function setNewAsset(\stdClass $assetData)
     {
-        // TODO: Implement setNewAsset() method.
         $this->newAsset = $assetData;
     }
 
