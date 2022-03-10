@@ -10,8 +10,4 @@ trait AssetTrait
     protected $wcms;
     public $oldAsset;
     public $newAsset;
-
-    public $assetTypeFetch;
-    public $assetTypeCreate;
-    public $assetTypeDisplay;
 }

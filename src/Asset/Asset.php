@@ -11,9 +11,10 @@ class Asset implements AssetInterface
     use AssetTrait;
 
 
-    public function __construct(WCMSClient $wcms)
+    public function __construct(WCMSClient $wcms, string $path)
     {
         $this->wcms = $wcms;
+        $this->setOldAsset($path);
     }
 
     public function setOldAsset(string $path)
