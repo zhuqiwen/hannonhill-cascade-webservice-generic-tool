@@ -45,7 +45,14 @@ class ConstantsConstructor
         define("ASSET_FILE_FETCH", "file");
         define("ASSET_FOLDER_FETCH", "folder");
         define("ASSET_FORMAT_FETCH", "format");
+        define("ASSET_FORMAT_XSLT_FETCH", "format_XSLT");
+        define("ASSET_FORMAT_SCRIPT_FETCH", "format_SCRIPT");
         define("ASSET_BLOCK_FETCH", "block");
+        define("ASSET_BLOCK_FEED_FETCH", "block_FEED");
+        define("ASSET_BLOCK_INDEX_FETCH", "block_INDEX");
+        define("ASSET_BLOCK_TEXT_FETCH", "block_TEXT");
+        define("ASSET_BLOCK_XHTML_FETCH", "block_XHTML_DATADEFINITION");
+        define("ASSET_BLOCK_XML_FETCH", "block_XML");
         define("ASSET_SHARED_FIELD_FETCH", "sharedfield");
         define("ASSET_DATA_DEFINITION_FETCH", "datadefinition");
         define("ASSET_CONTENT_TYPE_FETCH", "contenttype");
@@ -66,6 +73,7 @@ class ConstantsConstructor
         define("ASSET_FOLDER_CREATE", "folder");
         define("ASSET_PAGE_CREATE", "page");
         define("ASSET_FORMAT_CREATE", "format");
+        define("ASSET_BLOCK_CREATE", "block");
         define("ASSET_BLOCK_FEED_CREATE", "feedBlock");
         define("ASSET_BLOCK_INDEX_CREATE", "indexBlock");
         define("ASSET_BLOCK_TEXT_CREATE", "textBlock");
