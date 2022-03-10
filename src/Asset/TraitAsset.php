@@ -8,5 +8,10 @@ trait AssetTrait
 {
 
     protected WCMSClient $wcms;
+    public $oldAsset;
+    public $newAsset;
+    public $id;
+    public $path;
+    public $siteName;
 
 }
