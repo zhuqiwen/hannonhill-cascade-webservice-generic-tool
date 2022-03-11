@@ -11,7 +11,7 @@ class BlockXHTML extends Asset implements AssetInterface {
 
     public function updateContent()
     {
-        // TODO: Implement updateContent() method.
+
     }
 
 }
