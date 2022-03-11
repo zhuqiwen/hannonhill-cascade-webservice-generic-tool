@@ -6,7 +6,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 use Edu\IU\Wcms\WebService\WCMSClient;
 use phpDocumentor\Reflection\Types\This;
 
-class Asset implements AssetInterface
+class Asset
 {
     use AssetTrait;
 
@@ -16,7 +16,5 @@ class Asset implements AssetInterface
         $this->wcms = $wcms;
         $this->setOldAsset($path);
     }
-
-
 
 }

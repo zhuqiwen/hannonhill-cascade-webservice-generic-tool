@@ -2,7 +2,7 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
-use Edu\IU\Wcms\WebService\WCMSClient;
+//use Edu\IU\Wcms\WebService\WCMSClient;
 
 trait AssetTrait
 {
@@ -38,4 +38,16 @@ trait AssetTrait
     {
         return $this->wcms->assetExists($path, $this->assetTypeFetch);
     }
+
+    public function saveNewAsset()
+    {
+        $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
+    }
+
+    public function saveOldAsset()
+    {
+        $this->wcms->saveAsset($this->oldAsset, $this->assetTypeCreate);
+    }
+
+
 }

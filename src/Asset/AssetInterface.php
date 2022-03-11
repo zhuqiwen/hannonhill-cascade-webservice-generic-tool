@@ -8,4 +8,6 @@ interface AssetInterface
     public function setNewAsset(\stdClass $assetData);
 
     public function assetExists(string $path);
+
+    public function updateContent();
 }
