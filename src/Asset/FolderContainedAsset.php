@@ -3,5 +3,5 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 class FolderContainedAsset extends Asset {
-    public $containerClassName = 'Folder';
+    protected $containerClassName = 'Folder';
 }

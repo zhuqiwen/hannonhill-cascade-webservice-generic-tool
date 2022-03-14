@@ -83,8 +83,11 @@ trait AssetTrait
         $grantParentPath = empty($grantParentPath) ? DIRECTORY_SEPARATOR : $grantParentPath;
 
 
+
+        $parentContainerKey = strpos($this->containerClassName, 'Folder') ? 'parentFolderPath' : 'parentContainerPath';
+
         $parentAsset = (object) [
-            'parentFolderPath' => $grantParentPath,
+            $parentContainerKey => $grantParentPath,
             'name' => $parentName,
             'path' => str_replace("//", "/", $grantParentPath . "/" . $parentName),
         ];
