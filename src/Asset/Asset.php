@@ -11,10 +11,14 @@ class Asset
     use AssetTrait;
 
 
-    public function __construct(WCMSClient $wcms, string $path)
+    public function __construct(WCMSClient $wcms, string $path = "")
     {
         $this->wcms = $wcms;
-        $this->setOldAsset($path);
+        if(!empty($path))
+        {
+            $this->setOldAsset($path);
+        }
+
     }
 
 }
