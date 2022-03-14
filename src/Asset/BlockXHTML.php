@@ -21,8 +21,10 @@ class BlockXHTML extends Asset implements AssetInterface {
             $this->createParent();
         }
 
+        $path = $this->newAsset->path;
         unset($this->newAsset->path);
         $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+        $this->setOldAsset($path);
 
     }
 
@@ -39,5 +41,7 @@ class BlockXHTML extends Asset implements AssetInterface {
         }
 
     }
+
+
 
 }

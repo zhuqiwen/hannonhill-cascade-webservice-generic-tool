@@ -63,6 +63,14 @@ trait AssetTrait
     {
     }
 
+    public function deleteAsset()
+    {
+        if($this->wcms->assetExists($this->oldAsset->path, $this->assetTypeFetch))
+        {
+            $this->wcms->deleteAsset($this->assetTypeFetch, $this->oldAsset->path);
+        }
+    }
+
 
     public function prepareParentAssetForCreate(): array
     {

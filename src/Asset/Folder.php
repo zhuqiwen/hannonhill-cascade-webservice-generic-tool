@@ -26,9 +26,6 @@ class Folder extends Asset implements AssetInterface
     }
 
 
-
-
-
     public function createParent()
     {
         $data = $this->prepareParentAssetForCreate();
