@@ -49,8 +49,8 @@ class Folder extends Asset implements AssetInterface
         }
 
         // when create folder, path should not be included in payload
-        unset($asset->path);
-        $this->wcms->createAsset($this->assetTypeCreate, $asset);
+        unset($parentAsset->path);
+        $this->wcms->createAsset($this->assetTypeCreate, $parentAsset);
 
     }
 
