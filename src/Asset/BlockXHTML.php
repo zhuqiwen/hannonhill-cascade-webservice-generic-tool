@@ -21,6 +21,7 @@ class BlockXHTML extends Asset implements AssetInterface {
             $this->createParent();
         }
 
+        unset($this->newAsset->path);
         $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
 
     }
@@ -28,11 +29,14 @@ class BlockXHTML extends Asset implements AssetInterface {
     public function createParent()
     {
         $data = $this->prepareParentAssetForCreate();
-        $asset = $data['parentAsset'];
+        $parentAsset = $data['parentAsset'];
 
-        $folder = new Folder($this->wcms);
-        $folder->setNewAsset($asset);
-        $folder->createAsset();
+        if($parentAsset->path != DIRECTORY_SEPARATOR)
+        {
+            $folder = new Folder($this->wcms);
+            $folder->setNewAsset($parentAsset);
+            $folder->createAsset();
+        }
 
     }
 

@@ -81,10 +81,7 @@ trait AssetTrait
             'path' => str_replace("//", "/", $grantParentPath . "/" . $parentName),
         ];
 
-        return compact($path, $grantParentPath, $parentAsset);
-
-
-
+        return compact("path", "grantParentPath", "parentAsset");
 
     }
 

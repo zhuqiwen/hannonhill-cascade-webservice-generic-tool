@@ -19,7 +19,21 @@ var_dump($block->oldAsset);
 #### Update
 #### Create
 ```PHP
-$assetPayload = (object)[];
+$assetPayload = [];
+//required
+$assetPayload['structuredData'] = [
+    'definitionPath' => 'path-to-data-definition',
+    // OR
+    //'definitionId' => 'data definition id'
+];
+//OR required
+//$assetPayload['xhtml'] = '';
+//required
+$assetPayload['parentFolderPath'] = "path-to-parent-folder";
+//OR required
+//$assetPayload['parentFolderId'] = "parent-folder-id";
+$assetPayload['name'] = "asset-name";
+$assetPayload = (object) $assetPayload;
 $block = new BlockXHTML($wcms);
 $block->setNewAsset($assetPayload);
 $block->createAsset();
