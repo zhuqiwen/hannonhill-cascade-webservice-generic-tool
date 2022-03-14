@@ -15,7 +15,7 @@ class Folder extends Asset implements AssetInterface
 
     public function createAsset()
     {
-        if(!$this->wcms->assetExists($this->getParentPath(), $this->assetTypeFetch))
+        if(!$this->wcms->assetExists($this->getParentPathForCreate(), $this->assetTypeFetch))
         {
             $this->createParent();
         }
@@ -26,27 +26,15 @@ class Folder extends Asset implements AssetInterface
     }
 
 
-    public function getParentPath()
-    {
-        return $this->newAsset->parentFolderPath;
-    }
+
+
 
     public function createParent()
     {
-        $path = $this->getNewAssetPath();
-        $pathArray = explode(DIRECTORY_SEPARATOR, $path);
-        // remove current folder name
-        array_pop($pathArray);
-        $parentName = array_pop($pathArray);
-        $grantParentPath = implode(DIRECTORY_SEPARATOR, $pathArray);
-        $grantParentPath = empty($grantParentPath) ? DIRECTORY_SEPARATOR : $grantParentPath;
-
-
-        $asset = (object) [
-            'parentFolderPath' => $grantParentPath,
-            'name' => $parentName,
-            'path' => str_replace("//", "/", $grantParentPath . "/" . $parentName),
-        ];
+        $data = $this->prepareParentAssetForCreate();
+        $path = $data['path'];
+        $grantParentPath = $data['grantParentPath'];
+        $parentAsset = $data['parentAsset'];
 
         if($path == DIRECTORY_SEPARATOR)
         {
@@ -56,7 +44,7 @@ class Folder extends Asset implements AssetInterface
         if(!$this->wcms->assetExists($grantParentPath, $this->assetTypeFetch))
         {
             $folder = new Folder($this->wcms);
-            $folder->setNewAsset($asset);
+            $folder->setNewAsset($parentAsset);
             $folder->createParent();
         }
 

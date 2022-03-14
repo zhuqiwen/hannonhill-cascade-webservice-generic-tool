@@ -54,8 +54,38 @@ trait AssetTrait
         return $this->newAsset->path;
     }
 
+    public function getParentPathForCreate()
+    {
+        return $this->newAsset->parentFolderPath;
+    }
+
     public function createAsset()
     {
+    }
+
+
+    public function prepareParentAssetForCreate(): array
+    {
+        $path = $this->getNewAssetPath();
+        $pathArray = explode(DIRECTORY_SEPARATOR, $path);
+        // remove current folder name
+        array_pop($pathArray);
+        $parentName = array_pop($pathArray);
+        $grantParentPath = implode(DIRECTORY_SEPARATOR, $pathArray);
+        $grantParentPath = empty($grantParentPath) ? DIRECTORY_SEPARATOR : $grantParentPath;
+
+
+        $parentAsset = (object) [
+            'parentFolderPath' => $grantParentPath,
+            'name' => $parentName,
+            'path' => str_replace("//", "/", $grantParentPath . "/" . $parentName),
+        ];
+
+        return compact($path, $grantParentPath, $parentAsset);
+
+
+
+
     }
 
 }
