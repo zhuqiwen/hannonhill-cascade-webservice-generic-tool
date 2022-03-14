@@ -49,4 +49,13 @@ trait AssetTrait
     }
 
 
+    public function getNewAssetPath()
+    {
+        return $this->newAsset->path;
+    }
+
+    public function createAsset()
+    {
+    }
+
 }

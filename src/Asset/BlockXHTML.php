@@ -9,9 +9,15 @@ class BlockXHTML extends Asset implements AssetInterface {
     public $assetTypeFetch = ASSET_BLOCK_XHTML_FETCH;
     public $assetTypeCreate = ASSET_BLOCK_XHTML_CREATE;
 
+    public $parentTypeFetch;
+
     public function updateContent()
     {
+    }
 
+    public function createParent()
+    {
+        
     }
 
 }

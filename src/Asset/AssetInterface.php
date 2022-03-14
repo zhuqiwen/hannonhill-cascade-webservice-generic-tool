@@ -10,4 +10,6 @@ interface AssetInterface
     public function assetExists(string $path);
 
     public function updateContent();
+
+//    public function createParent();
 }
