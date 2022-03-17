@@ -138,10 +138,9 @@ trait AssetTrait
 
     public function getParentPathForCreate()
     {
-        $calledClass = get_called_class();
-        $fullCallerParentClass = get_parent_class($calledClass);
-        $fullCallerParentClass = explode('\\', $fullCallerParentClass);
-        $callerParentClassName = array_pop($fullCallerParentClass);
+        $classNames = $this->getCalledClassAndParentClass();
+        extract($classNames);
+
 
         if($callerParentClassName == "FolderContainedAsset")
         {
@@ -157,6 +156,29 @@ trait AssetTrait
             $msg .= " needs to be child of either FolderContainedAsset or ContaineredAsset to be able to create parent folder or container.";
             throw new \RuntimeException($msg);
         }
+
+        return $path;
+    }
+
+    public function getCalledClassAndParentClass()
+    {
+        $calledClass = get_called_class();
+        $fullCallerParentClass = get_parent_class($calledClass);
+        $fullCallerParentClass = explode('\\', $fullCallerParentClass);
+        $callerParentClassName = array_pop($fullCallerParentClass);
+
+        return compact('calledClass', 'callerParentClassName');
+    }
+
+    public function getNewAssetPath()
+    {
+        $parentPath = $this->getParentPathForCreate();
+
+        $path = DIRECTORY_SEPARATOR
+            . trim($parentPath, DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR
+            . trim($this->newAsset->name);
+
         return $path;
     }
 }
