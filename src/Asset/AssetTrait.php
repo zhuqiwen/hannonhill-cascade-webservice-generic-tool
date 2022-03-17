@@ -54,15 +54,7 @@ trait AssetTrait
     }
 
 
-    public function getNewAssetPath()
-    {
-        $path = DIRECTORY_SEPARATOR
-            . trim($this->newAsset->parentFolderPath, DIRECTORY_SEPARATOR)
-            . DIRECTORY_SEPARATOR
-            . trim($this->newAsset->name);
 
-        return $path;
-    }
 
 
 

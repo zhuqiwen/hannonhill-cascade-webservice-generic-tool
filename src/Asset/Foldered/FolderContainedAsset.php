@@ -5,6 +5,16 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 class FolderContainedAsset extends Asset {
     public $containerClassName = 'Folder';
 
+    public function getNewAssetPath()
+    {
+        $path = DIRECTORY_SEPARATOR
+            . trim($this->newAsset->parentFolderPath, DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR
+            . trim($this->newAsset->name);
+
+        return $path;
+    }
+
     public function getParentPathForCreate()
     {
         return $this->newAsset->parentFolderPath;
