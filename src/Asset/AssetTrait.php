@@ -3,15 +3,20 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
+
 trait AssetTrait
 {
 
     protected $wcms;
+    protected $namespace;
     public $oldAsset;
     public $newAsset;
     public $assetTypeDisplay;
     public $assetTypeFetch;
     public $assetTypeCreate;
+    public $containerClassName;
+
+
 
 
 
@@ -51,16 +56,21 @@ trait AssetTrait
 
     public function getNewAssetPath()
     {
-        return $this->newAsset->path;
+        $path = DIRECTORY_SEPARATOR
+            . trim($this->newAsset->parentFolderPath, DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR
+            . trim($this->newAsset->name);
+
+        return $path;
     }
 
-    public function getParentPathForCreate()
-    {
-        return $this->newAsset->parentFolderPath;
-    }
 
-    public function createAsset()
-    {
+
+
+
+
+    public function rollbackCreateAsset(){
+        $this->deleteAsset();
     }
 
     public function deleteAsset()
@@ -71,6 +81,10 @@ trait AssetTrait
         }
     }
 
+    public function rollbackDeleteAsset()
+    {
+
+    }
 
     public function prepareParentAssetForCreate(): array
     {
@@ -84,7 +98,7 @@ trait AssetTrait
 
 
 
-        $parentContainerKey = strpos($this->containerClassName, 'Folder') ? 'parentFolderPath' : 'parentContainerPath';
+        $parentContainerKey = strpos($this->containerClassName, 'Folder') === false ? 'parentContainerPath' : 'parentFolderPath';
 
         $parentAsset = (object) [
             $parentContainerKey => $grantParentPath,
@@ -96,4 +110,7 @@ trait AssetTrait
 
     }
 
+    protected function getNamespace(){
+        return "Edu\IU\Framework\GenericUpdater\Asset";
+    }
 }

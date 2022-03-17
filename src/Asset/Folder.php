@@ -13,18 +13,6 @@ class Folder extends FolderContainedAsset implements AssetInterface
     {
     }
 
-    public function createAsset()
-    {
-        if(!$this->wcms->assetExists($this->getParentPathForCreate(), $this->assetTypeFetch))
-        {
-            $this->createParent();
-        }
-
-        unset($this->newAsset->path);
-        $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
-
-    }
-
 
     public function createParent()
     {
@@ -32,6 +20,7 @@ class Folder extends FolderContainedAsset implements AssetInterface
         $path = $data['path'];
         $grantParentPath = $data['grantParentPath'];
         $parentAsset = $data['parentAsset'];
+
 
         if($path == DIRECTORY_SEPARATOR)
         {
