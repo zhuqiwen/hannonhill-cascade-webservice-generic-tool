@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\IU\Framework\GenericUpdater\Asset;
+namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
 class FolderContainedAsset extends Asset {
     public $containerClassName = 'Folder';

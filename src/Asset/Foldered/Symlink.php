@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\IU\Framework\GenericUpdater\Asset;
+namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
 class Symlink extends FolderContainedAsset implements AssetInterface {
     public $assetTypeDisplay = "Symlink";

@@ -1,8 +1,6 @@
 <?php
 
-namespace Edu\IU\Framework\GenericUpdater\Asset;
-
-use Edu\IU\Wcms\WebService\WCMSClient;
+namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
 class BlockXHTML extends FolderContainedAsset implements AssetInterface {
     public $assetTypeDisplay = "Block";
