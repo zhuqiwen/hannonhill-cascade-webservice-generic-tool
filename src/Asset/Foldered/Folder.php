@@ -2,8 +2,7 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
-class Folder extends FolderContainedAsset implements AssetInterface
-{
+class Folder extends FolderContainedAsset{
     public $assetTypeDisplay = "Folder";
     public $assetTypeFetch = ASSET_FOLDER_FETCH;
     public $assetTypeCreate = ASSET_FOLDER_CREATE;
