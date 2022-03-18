@@ -2,7 +2,10 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
-class Folder extends FolderContainedAsset{
+use Edu\IU\Framework\GenericUpdater\Asset\Asset;
+use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
+
+class Folder extends Asset {
     public $assetTypeDisplay = "Folder";
     public $assetTypeFetch = ASSET_FOLDER_FETCH;
     public $assetTypeCreate = ASSET_FOLDER_CREATE;
@@ -12,32 +15,84 @@ class Folder extends FolderContainedAsset{
     {
     }
 
+    public function createAsset()
+    {
+        try {
+            new Folder($this->wcms, $this->newAsset->parentFolderPath);
+        }catch (AssetNotFoundException $e){
+            echo $e->getMessage() . ", which will be created now." . PHP_EOL;
+            $this->createParent();
+        }catch (\RuntimeException $e){
+            echo $e->getMessage();
+        }
+
+        if(!$this->assetExists($this->getNewAssetPath()))
+        {
+            unset($this->newAsset->path);
+            $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+            echo "The following folder has been created:" . PHP_EOL;
+            print_r($this->newAsset);
+        }
+    }
 
     public function createParent()
     {
-        $data = $this->prepareParentAssetForCreate();
-        $path = $data['path'];
-        $grantParentPath = $data['grantParentPath'];
-        $parentAsset = $data['parentAsset'];
+        $asset = $this->getGrantParentAssetForCreate();
+        $path = $asset->parentFolderPath . DIRECTORY_SEPARATOR . $asset->name;
 
-
-        if($path == DIRECTORY_SEPARATOR)
+        if ($path == DIRECTORY_SEPARATOR)
         {
             return;
         }
 
-        if(!$this->wcms->assetExists($grantParentPath, $this->assetTypeFetch))
+        if(!$this->wcms->assetExists($path, $this->assetTypeFetch))
         {
             $folder = new Folder($this->wcms);
-            $folder->setNewAsset($parentAsset);
-            $folder->createParent();
+            $folder->setNewAsset($asset);
+            $folder->createAsset();
         }
 
-        // when create folder, path should not be included in payload
-        unset($parentAsset->path);
-        $this->wcms->createAsset($this->assetTypeCreate, $parentAsset);
 
     }
+
+    public function getGrantParentAssetForCreate(): \stdClass
+    {
+        $array = explode(DIRECTORY_SEPARATOR, $this->newAsset->parentFolderPath);
+        $grantParentName = array_pop($array);
+        $grantParentPath = implode(DIRECTORY_SEPARATOR, $array);
+
+        return (object)[
+            'parentFolderPath' => empty($grantParentPath) ? '/' : $grantParentPath,
+            'name' => $grantParentName
+        ];
+
+    }
+
+//    public function createParent()
+//    {
+//        $data = $this->prepareParentAssetForCreate();
+//        $path = $data['path'];
+//        $grantParentPath = $data['grantParentPath'];
+//        $parentAsset = $data['parentAsset'];
+//
+//
+//        if($path == DIRECTORY_SEPARATOR)
+//        {
+//            return;
+//        }
+//
+//        if(!$this->wcms->assetExists($grantParentPath, $this->assetTypeFetch))
+//        {
+//            $folder = new Folder($this->wcms);
+//            $folder->setNewAsset($parentAsset);
+//            $folder->createParent();
+//        }
+//
+//        // when create folder, path should not be included in payload
+//        unset($this->newAsset->path);
+//        $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+//
+//    }
 
 
 
