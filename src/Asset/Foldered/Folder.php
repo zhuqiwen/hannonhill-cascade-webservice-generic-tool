@@ -26,8 +26,9 @@ class Folder extends Asset {
         {
             unset($this->newAsset->path);
             $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
-            echo "The following folder has been created:" . PHP_EOL;
-            print_r($this->newAsset);
+            echo "The following Asset has been created:" . PHP_EOL;
+            echo "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
+            echo "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
         }
     }
 
