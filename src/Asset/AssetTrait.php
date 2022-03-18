@@ -79,61 +79,6 @@ trait AssetTrait
 
     }
 
-    public function prepareParentAssetForCreate(): array
-    {
-        $path = $this->getNewAssetPath();
-        $pathArray = explode(DIRECTORY_SEPARATOR, $path);
-        // remove current folder name
-        array_pop($pathArray);
-        $parentName = array_pop($pathArray);
-        $grantParentPath = implode(DIRECTORY_SEPARATOR, $pathArray);
-        $grantParentPath = empty($grantParentPath) ? DIRECTORY_SEPARATOR : $grantParentPath;
-
-
-        $calledClass = get_called_class();
-
-        $parentContainerKey = strpos($calledClass, 'Foldered') === false ? 'parentContainerPath' : 'parentFolderPath';
-
-        $parentAsset = (object) [
-            $parentContainerKey => $grantParentPath,
-            'name' => $parentName,
-            'path' => str_replace("//", "/", $grantParentPath . "/" . $parentName),
-        ];
-
-        return compact("path", "grantParentPath", "parentAsset");
-
-    }
-
-
-//    public function createAsset()
-//    {
-//
-//        if(!$this->wcms->assetExists($this->getParentPathForCreate(), $this->assetTypeFetch))
-//        {
-//            $this->createParent();
-//        }
-//
-//        unset($this->newAsset->path);
-//        $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
-//    }
-//
-//    public function createParent()
-//    {
-//        $data = $this->prepareParentAssetForCreate();
-//        $parentAsset = $data['parentAsset'];
-//
-//
-//        if($parentAsset->path != DIRECTORY_SEPARATOR)
-//        {
-//            $fullCallerParentClass = get_parent_class(get_called_class());
-//
-//            $folder = new $fullCallerParentClass($this->wcms);
-//            $folder->setNewAsset($parentAsset);
-//            $folder->createAsset();
-//        }
-//    }
-
-
 
     public function getParentPathForCreate()
     {
@@ -161,11 +106,12 @@ trait AssetTrait
     {
         $parentPath = $this->getParentPathForCreate();
 
-        return DIRECTORY_SEPARATOR
+        $path = DIRECTORY_SEPARATOR
             . trim($parentPath, DIRECTORY_SEPARATOR)
             . DIRECTORY_SEPARATOR
             . trim($this->newAsset->name);
 
+        return str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
     }
 
     public function createAsset()
