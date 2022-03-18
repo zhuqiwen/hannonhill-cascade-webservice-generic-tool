@@ -25,7 +25,7 @@ trait ContaineredAssetTrait {
             $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
             echo "The following Asset has been created:" . PHP_EOL;
             echo "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
-            echo "\tAsset Path: " . $this->newAsset->parentContainerPath . DIRECTORY_SEPARATOR . $this->newAsset->name . PHP_EOL;
+            echo "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
         }
     }
 
