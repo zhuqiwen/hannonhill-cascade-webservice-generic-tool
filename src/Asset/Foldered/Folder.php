@@ -11,10 +11,6 @@ class Folder extends Asset {
     public $assetTypeCreate = ASSET_FOLDER_CREATE;
 
 
-    public function updateContent()
-    {
-    }
-
     public function createAsset()
     {
         try {
@@ -67,34 +63,5 @@ class Folder extends Asset {
         ];
 
     }
-
-//    public function createParent()
-//    {
-//        $data = $this->prepareParentAssetForCreate();
-//        $path = $data['path'];
-//        $grantParentPath = $data['grantParentPath'];
-//        $parentAsset = $data['parentAsset'];
-//
-//
-//        if($path == DIRECTORY_SEPARATOR)
-//        {
-//            return;
-//        }
-//
-//        if(!$this->wcms->assetExists($grantParentPath, $this->assetTypeFetch))
-//        {
-//            $folder = new Folder($this->wcms);
-//            $folder->setNewAsset($parentAsset);
-//            $folder->createParent();
-//        }
-//
-//        // when create folder, path should not be included in payload
-//        unset($this->newAsset->path);
-//        $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
-//
-//    }
-
-
-
 
 }
