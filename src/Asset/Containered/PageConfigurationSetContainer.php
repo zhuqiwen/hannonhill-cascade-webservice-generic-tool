@@ -4,7 +4,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 
 use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 
-class PageConfigurationContainer extends Asset {
+class PageConfigurationSetContainer extends Asset {
     use ContaineredAssetTrait;
 
     public $assetTypeDisplay = "Page Configuration Set Container";
