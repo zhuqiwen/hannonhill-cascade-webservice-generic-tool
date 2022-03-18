@@ -67,6 +67,8 @@ class ConstantsConstructor
         define("ASSET_CONTAINER_SHARED_FIELD_FETCH", "sharedfieldcontainer");
         define("ASSET_CONTAINER_DATA_DEFINITION_FETCH", "datadefinitioncontainer");
         define("ASSET_CONTAINER_CONTENT_TYPE_FETCH", "contenttypecontainer");
+        define("ASSET_CONTAINER_METADATA_SET_FETCH", "metadatasetcontainer");
+        define("ASSET_CONTAINER_ASSET_FACTORY_FETCH", "assetfactorycontainer");
     }
 
     private function defineAssetTypesForCreate()
@@ -102,6 +104,8 @@ class ConstantsConstructor
         define("ASSET_CONTAINER_SHARED_FIELD_CREATE", "sharedFieldContainer");
         define("ASSET_CONTAINER_DATA_DEFINITION_CREATE", "dataDefinitionContainer");
         define("ASSET_CONTAINER_CONTENT_TYPE_CREATE", "contentTypeContainer");
+        define("ASSET_CONTAINER_METADATA_SET_CREATE", "metadataSetContainer");
+        define("ASSET_CONTAINER_ASSET_FACTORY_CREATE", "assetFactoryContainer");
     }
 
 

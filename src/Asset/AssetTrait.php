@@ -4,6 +4,8 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
 
+use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
+
 trait AssetTrait
 {
 
@@ -29,7 +31,7 @@ trait AssetTrait
         }
         else
         {
-            //TODO: set error and throw exception for user api key
+            throw new AssetNotFoundException($this->assetTypeDisplay . ": " . $path . " could not be found");
         }
     }
 
@@ -40,7 +42,7 @@ trait AssetTrait
 
     public function assetExists(string $path): bool
     {
-        return $this->wcms->assetExists($path, $this->assetTypeFetch);
+        return (bool)$this->wcms->assetExists($path, $this->assetTypeFetch);
     }
 
     public function updateAsset()
@@ -89,8 +91,9 @@ trait AssetTrait
         $grantParentPath = empty($grantParentPath) ? DIRECTORY_SEPARATOR : $grantParentPath;
 
 
+        $calledClass = get_called_class();
 
-        $parentContainerKey = strpos($this->containerClassName, 'Folder') === false ? 'parentContainerPath' : 'parentFolderPath';
+        $parentContainerKey = strpos($calledClass, 'Foldered') === false ? 'parentContainerPath' : 'parentFolderPath';
 
         $parentAsset = (object) [
             $parentContainerKey => $grantParentPath,
@@ -103,50 +106,45 @@ trait AssetTrait
     }
 
 
-    public function createAsset()
-    {
-        if(!$this->wcms->assetExists($this->getParentPathForCreate(), $this->assetTypeFetch))
-        {
-            $this->createParent();
-        }
+//    public function createAsset()
+//    {
+//
+//        if(!$this->wcms->assetExists($this->getParentPathForCreate(), $this->assetTypeFetch))
+//        {
+//            $this->createParent();
+//        }
+//
+//        unset($this->newAsset->path);
+//        $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+//    }
+//
+//    public function createParent()
+//    {
+//        $data = $this->prepareParentAssetForCreate();
+//        $parentAsset = $data['parentAsset'];
+//
+//
+//        if($parentAsset->path != DIRECTORY_SEPARATOR)
+//        {
+//            $fullCallerParentClass = get_parent_class(get_called_class());
+//
+//            $folder = new $fullCallerParentClass($this->wcms);
+//            $folder->setNewAsset($parentAsset);
+//            $folder->createAsset();
+//        }
+//    }
 
-        unset($this->newAsset->path);
-        $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
 
-    }
-
-    public function createParent()
-    {
-        $data = $this->prepareParentAssetForCreate();
-        $parentAsset = $data['parentAsset'];
-
-
-        if($parentAsset->path != DIRECTORY_SEPARATOR)
-        {
-            $containerClassName = $this->getNamespace() . '\\' . $this->containerClassName;
-            $folder = new $containerClassName($this->wcms);
-            $folder->setNewAsset($parentAsset);
-
-            $folder->createAsset();
-        }
-    }
-
-
-    protected function getNamespace(){
-        return "Edu\IU\Framework\GenericUpdater\Asset";
-    }
 
     public function getParentPathForCreate()
     {
-        $classNames = $this->getCalledClassAndParentClass();
-        extract($classNames);
+        $calledClass = get_called_class();
 
-
-        if($callerParentClassName == "FolderContainedAsset")
+        if(strpos($calledClass, "Foldered") !== false)
         {
             $path = $this->newAsset->parentFolderPath;
         }
-        elseif($callerParentClassName == "ContaineredAsset")
+        elseif(strpos($calledClass, "Containered") !== false)
         {
             $path = $this->newAsset->parentContainerPath;
         }
@@ -160,25 +158,67 @@ trait AssetTrait
         return $path;
     }
 
-    public function getCalledClassAndParentClass()
-    {
-        $calledClass = get_called_class();
-        $fullCallerParentClass = get_parent_class($calledClass);
-        $fullCallerParentClass = explode('\\', $fullCallerParentClass);
-        $callerParentClassName = array_pop($fullCallerParentClass);
-
-        return compact('calledClass', 'callerParentClassName');
-    }
-
     public function getNewAssetPath()
     {
         $parentPath = $this->getParentPathForCreate();
 
-        $path = DIRECTORY_SEPARATOR
+        return DIRECTORY_SEPARATOR
             . trim($parentPath, DIRECTORY_SEPARATOR)
             . DIRECTORY_SEPARATOR
             . trim($this->newAsset->name);
 
-        return $path;
+    }
+
+    public function createAsset()
+    {
+        $parentClass = get_parent_class(get_called_class());
+        $parentPath = $this->getParentPathForCreate();
+        try {
+            new $parentClass($this->wcms, $parentPath);
+        }catch (AssetNotFoundException $e){
+            echo $e->getMessage() . ", which will be created now." . PHP_EOL;
+            $this->createParent();
+        }catch (\RuntimeException $e){
+            echo $e->getMessage();
+        }
+
+        if(!$this->assetExists($this->getNewAssetPath()))
+        {
+            unset($this->newAsset->path);
+            $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+            echo "The following asset has been created:" . PHP_EOL;
+            print_r($this->newAsset);
+        }
+
+    }
+
+    /**
+     *
+     * Directs parent creation to either Folder or other container classes
+     * Folder and other container classes have overrides
+     *
+     */
+    public function createParent()
+    {
+        $parentClass = get_parent_class(get_called_class());
+        $parentAsset = $this->getParentAssetForCreate();
+        $parent = new $parentClass($this->wcms);
+        $parent->setNewAsset($parentAsset);
+        $parent->createAsset();
+    }
+
+    public function getParentAssetForCreate(): \stdClass
+    {
+        $calledClass = get_called_class();
+        $parentContainerKey = strpos($calledClass, 'Foldered') === false ? 'parentContainerPath' : 'parentFolderPath';
+
+        $path = explode(DIRECTORY_SEPARATOR, $this->getParentPathForCreate());
+        $name = array_pop($path);
+
+        return (object)[
+            $parentContainerKey => implode(DIRECTORY_SEPARATOR, $path),
+            'name' => $name
+        ];
+
     }
 }
