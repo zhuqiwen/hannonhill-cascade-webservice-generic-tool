@@ -16,7 +16,6 @@ trait AssetTrait
     public $assetTypeDisplay;
     public $assetTypeFetch;
     public $assetTypeCreate;
-    public $containerClassName;
 
 
 
