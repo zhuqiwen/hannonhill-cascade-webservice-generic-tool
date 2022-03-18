@@ -2,7 +2,11 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 
-class PageConfigurationContainer extends ContaineredAsset{
+use Edu\IU\Framework\GenericUpdater\Asset\Asset;
+
+class PageConfigurationContainer extends Asset {
+    use ContaineredAssetTrait;
+
     public $assetTypeDisplay = "Page Configuration Set Container";
     public $assetTypeFetch = ASSET_CONTAINER_PAGE_CONFIGURATION_SET_FETCH;
     public $assetTypeCreate = ASSET_CONTAINER_PAGE_CONFIGURATION_SET_CREATE;
