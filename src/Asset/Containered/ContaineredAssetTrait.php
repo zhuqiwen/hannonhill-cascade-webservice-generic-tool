@@ -75,18 +75,19 @@ trait ContaineredAssetTrait {
     }
 
 
-    public function checkInputIntegrity()
+    public function checkInputIntegrity(\stdClass $assetData)
     {
-        $this->checkIfSetParentPath();
-        $this->checkIfSetName();
+        $this->checkIfSetParentPath($assetData);
+        $this->checkIfSetName($assetData);
     }
 
-    public function checkIfSetParentPath()
+    public function checkIfSetParentPath(\stdClass $assetData)
     {
         $className = $this->getClassName();
 
-        if(!isset($this->newAsset->parentContainerPath)){
+        if(!isset($assetData->parentContainerPath)){
             throw new InputIntegrityException("$className payload: [parentContainerPath] => 'PATH-TO-PARENT' is missing");
         }
     }
+
 }

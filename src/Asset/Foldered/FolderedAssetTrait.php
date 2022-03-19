@@ -10,17 +10,17 @@ trait FolderedAssetTrait {
 
 
 
-    public function checkInputIntegrity()
+    public function checkInputIntegrity(\stdClass $assetData)
     {
-        $this->checkIfSetParentPath();
-        $this->checkIfSetName();
+        $this->checkIfSetParentPath($assetData);
+        $this->checkIfSetName($assetData);
     }
 
-    public function checkIfSetParentPath()
+    public function checkIfSetParentPath(\stdClass $assetData)
     {
         $className = $this->getClassName();
 
-        if(!isset($this->newAsset->parentFolderPath)){
+        if(!isset($assetData->parentFolderPath)){
             throw new InputIntegrityException("$className payload: [parentFolderPath] => 'PATH-TO-PARENT' is missing");
         }
     }

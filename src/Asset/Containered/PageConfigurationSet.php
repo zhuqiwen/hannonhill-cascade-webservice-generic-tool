@@ -30,21 +30,25 @@ PAGECONFIGEXAMPLE;
 
     public function setNewAsset(\stdClass $assetData)
     {
-        parent::setNewAsset($assetData);
 
         try {
-            $this->checkDependencies();
+            $this->checkDependencies($assetData);
+            parent::setNewAsset($assetData);
         }catch (InputIntegrityException $e){
-            echo $e->getMessage();
+            $msg = $e->getMessage() . PHP_EOL;
+            $msg .= "Task aborted." . PHP_EOL;
+            die($msg);
         }catch (AssetNotFoundException $e){
-            echo $e->getMessage();
+            $msg = $e->getMessage() . PHP_EOL;
+            $msg .= "Task aborted." . PHP_EOL;
+            die($msg);
         }
 
     }
 
-    public function checkDependencies()
+    public function checkDependencies(\stdClass $assetData)
     {
-        $configurations = $this->newAsset->pageConfigurations['pageConfiguration'];
+        $configurations = $assetData->pageConfigurations['pageConfiguration'];
         foreach ($configurations as $index => $config){
             $this->checkConfigurationIntegrity($config, $index);
             $this->checkExistenceTemplate($config['templatePath']);
@@ -53,15 +57,13 @@ PAGECONFIGEXAMPLE;
 
     public function checkExistenceTemplate($templatePath): bool
     {
-        $result = true;
-        try {
-            new Template($this->wcms, $templatePath);
-        }catch (AssetNotFoundException $e){
-            echo $e->getMessage();
-            $result = false;
+        $template = new Template($this->wcms);
+        if(!$template->assetExists($templatePath)){
+            $msg = $template->assetTypeDisplay;
+            $msg .= ": " . $templatePath;
+            $msg .= " doesn't exist";
+            throw new AssetNotFoundException($msg);
         }
-
-        return $result;
     }
 
     public function checkConfigurationIntegrity(array $config, int $index)
@@ -81,16 +83,16 @@ PAGECONFIGEXAMPLE;
         }
     }
 
-    public function checkInputIntegrity()
+    public function checkInputIntegrity(\stdClass $assetData)
     {
-        parent::checkInputIntegrity();
-        $this->checkIfSetPageConfigurations();
+        parent::checkInputIntegrity($assetData);
+        $this->checkIfSetPageConfigurations($assetData);
 
     }
 
-    public function checkIfSetPageConfigurations()
+    public function checkIfSetPageConfigurations(\stdClass $assetData)
     {
-        $pageConfigurationsExist = isset($this->newAsset->pageConfigurations['pageConfiguration']);
+        $pageConfigurationsExist = isset($assetData->pageConfigurations['pageConfiguration']);
 
         if(!$pageConfigurationsExist){
             $msg = "Missing inputs of pageConfigurations. Please add one by example: ";

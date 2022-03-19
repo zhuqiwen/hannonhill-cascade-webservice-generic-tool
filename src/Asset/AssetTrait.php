@@ -37,12 +37,12 @@ trait AssetTrait
 
     public function setNewAsset(\stdClass $assetData)
     {
-        $this->newAsset = $assetData;
-
         try {
-            $this->checkInputIntegrity();
+            $this->checkInputIntegrity($assetData);
+            $this->newAsset = $assetData;
         }catch (InputIntegrityException $e){
-            echo $e->getMessage();
+            die($e->getMessage());
+
         }
 
     }
@@ -51,8 +51,6 @@ trait AssetTrait
     {
         return (bool)$this->wcms->assetExists($path, $this->assetTypeFetch);
     }
-
-
 
 
     public function getParentPathForCreate()
@@ -142,16 +140,16 @@ trait AssetTrait
 
     }
 
-    public function checkInputIntegrity()
+    public function checkInputIntegrity(\stdClass $assetData)
     {
-        $this->checkIfSetName();
+        $this->checkIfSetName($assetData);
     }
 
-    public function checkIfSetName()
+    public function checkIfSetName(\stdClass $assetData)
     {
         $className = $this->getClassName();
 
-        if(!isset($this->newAsset->name)){
+        if(!isset($assetData->name)){
             throw new InputIntegrityException("$className payload: [name] => 'ASSET-NAME' is missing");
         }
     }
