@@ -39,10 +39,16 @@ trait AssetTrait
     {
         try {
             $this->checkInputIntegrity($assetData);
+            $this->checkDependencies($assetData);
             $this->newAsset = $assetData;
         }catch (InputIntegrityException $e){
-            die($e->getMessage());
-
+            $msg = $e->getMessage() . PHP_EOL;
+            $msg .= "Task aborted." . PHP_EOL;
+            die($msg);
+        }catch (AssetNotFoundException $e){
+            $msg = $e->getMessage() . PHP_EOL;
+            $msg .= "Task aborted." . PHP_EOL;
+            die($msg);
         }
 
     }
@@ -152,6 +158,11 @@ trait AssetTrait
         if(!isset($assetData->name)){
             throw new InputIntegrityException("$className payload: [name] => 'ASSET-NAME' is missing");
         }
+    }
+
+    public function checkDependencies(\stdClass $assetData)
+    {
+
     }
 
     public function getClassName(): string

@@ -28,24 +28,6 @@ class PageConfigurationSet extends PageConfigurationSetContainer {
 PAGECONFIGEXAMPLE;
 
 
-    public function setNewAsset(\stdClass $assetData)
-    {
-
-        try {
-            $this->checkDependencies($assetData);
-            parent::setNewAsset($assetData);
-        }catch (InputIntegrityException $e){
-            $msg = $e->getMessage() . PHP_EOL;
-            $msg .= "Task aborted." . PHP_EOL;
-            die($msg);
-        }catch (AssetNotFoundException $e){
-            $msg = $e->getMessage() . PHP_EOL;
-            $msg .= "Task aborted." . PHP_EOL;
-            die($msg);
-        }
-
-    }
-
     public function checkDependencies(\stdClass $assetData)
     {
         $configurations = $assetData->pageConfigurations['pageConfiguration'];
@@ -78,7 +60,10 @@ PAGECONFIGEXAMPLE;
         foreach ($requiredKeys as $k => $v)
         {
             if(!isset($config[$k])){
-                throw new InputIntegrityException("For Output(page configuration) #$index, [$k] is required, and its value should be: $v");
+                $msg = "In the payload of Page Configuration Set, ";
+                $msg .= "[pageConfigurations][pageConfiguration][$index]";
+                $msg .= "[$k] is required, and its value should be: $v";
+                throw new InputIntegrityException($msg);
             }
         }
     }

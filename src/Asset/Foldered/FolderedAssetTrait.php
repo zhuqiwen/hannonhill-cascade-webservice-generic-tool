@@ -7,9 +7,6 @@ use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 trait FolderedAssetTrait {
 
 
-
-
-
     public function checkInputIntegrity(\stdClass $assetData)
     {
         $this->checkIfSetParentPath($assetData);
