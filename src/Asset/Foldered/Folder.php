@@ -6,6 +6,9 @@ use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 
 class Folder extends Asset {
+
+    use FolderedAssetTrait;
+
     public $assetTypeDisplay = "Folder";
     public $assetTypeFetch = ASSET_FOLDER_FETCH;
     public $assetTypeCreate = ASSET_FOLDER_CREATE;

@@ -5,7 +5,6 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Template;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
-use phpDocumentor\Reflection\Types\This;
 
 class PageConfigurationSet extends PageConfigurationSetContainer {
     public $assetTypeDisplay = "Page Configuration Set";
@@ -29,10 +28,11 @@ class PageConfigurationSet extends PageConfigurationSetContainer {
 PAGECONFIGEXAMPLE;
 
 
-    public function createAsset()
+    public function setNewAsset(\stdClass $assetData)
     {
+        parent::setNewAsset($assetData);
+
         try {
-            $this->checkInputIntegrity();
             $this->checkDependencies();
         }catch (InputIntegrityException $e){
             echo $e->getMessage();
@@ -40,7 +40,15 @@ PAGECONFIGEXAMPLE;
             echo $e->getMessage();
         }
 
-//        parent::createAsset();
+    }
+
+    public function checkDependencies()
+    {
+        $configurations = $this->newAsset->pageConfigurations['pageConfiguration'];
+        foreach ($configurations as $index => $config){
+            $this->checkConfigurationIntegrity($config, $index);
+            $this->checkExistenceTemplate($config['templatePath']);
+        }
     }
 
     public function checkExistenceTemplate($templatePath): bool
@@ -54,15 +62,6 @@ PAGECONFIGEXAMPLE;
         }
 
         return $result;
-    }
-
-    public function checkDependencies()
-    {
-        $configurations = $this->newAsset->pageConfigurations['pageConfiguration'];
-        foreach ($configurations as $index => $config){
-            $this->checkConfigurationIntegrity($config, $index);
-            $this->checkExistenceTemplate($config['templatePath']);
-        }
     }
 
     public function checkConfigurationIntegrity(array $config, int $index)
@@ -84,8 +83,7 @@ PAGECONFIGEXAMPLE;
 
     public function checkInputIntegrity()
     {
-        $this->checkIfSetParentPath();
-        $this->checkIfSetName();
+        parent::checkInputIntegrity();
         $this->checkIfSetPageConfigurations();
 
     }
@@ -102,18 +100,6 @@ PAGECONFIGEXAMPLE;
         }
     }
 
-    public function checkIfSetParentPath()
-    {
-        if(!isset($this->newAsset->parentContainerPath)){
-            throw new InputIntegrityException("[parentContainerPath] => 'PATH-TO-PARENT' is missing");
-        }
-    }
 
-    public function checkIfSetName()
-    {
-        if(!isset($this->newAsset->name)){
-            throw new InputIntegrityException("[name] => 'ASSET-NAME' is missing");
-        }
-    }
 
 }

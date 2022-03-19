@@ -3,7 +3,7 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
-use phpDocumentor\Reflection\Types\This;
+use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 trait ContaineredAssetTrait {
 
@@ -72,5 +72,21 @@ trait ContaineredAssetTrait {
         }
 
         return $parentClass;
+    }
+
+
+    public function checkInputIntegrity()
+    {
+        $this->checkIfSetParentPath();
+        $this->checkIfSetName();
+    }
+
+    public function checkIfSetParentPath()
+    {
+        $className = $this->getClassName();
+
+        if(!isset($this->newAsset->parentContainerPath)){
+            throw new InputIntegrityException("$className payload: [parentContainerPath] => 'PATH-TO-PARENT' is missing");
+        }
     }
 }

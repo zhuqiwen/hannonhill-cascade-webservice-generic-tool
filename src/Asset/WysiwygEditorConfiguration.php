@@ -4,14 +4,16 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 class WysiwygEditorConfiguration extends Asset{
 
-    public function getNewAssetPath()
-    {
-        throw new \RuntimeException("WYSIWYG Editor Configuration must not have path info");
-    }
+    public  $assetTypeDisplay = "WYSIWYG Editor Configuration";
+    public  $assetTypeFetch = ASSET_EDITOR_CONFIGURATION_FETCH;
+    public  $assetTypeCreate = ASSET_EDITOR_CONFIGURATION_CREATE;
 
-    public function getParentPathForCreate()
+
+
+
+    public function checkInputIntegrity()
     {
-        throw new \RuntimeException("WYSIWYG Editor Configuration must not have parent path info");
+        $this->checkIfSetName();
     }
 
 

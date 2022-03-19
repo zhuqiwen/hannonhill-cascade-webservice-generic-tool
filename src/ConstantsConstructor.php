@@ -63,6 +63,7 @@ class ConstantsConstructor
         define("ASSET_PAGE_FETCH", "page");
         define("ASSET_TEMPLATE_FETCH", "template");
         define("ASSET_SYMLINK_FETCH", "symlink");
+        define("ASSET_EDITOR_CONFIGURATION_FETCH", "editorconfiguration");
 
         define("ASSET_CONTAINER_PAGE_CONFIGURATION_SET_FETCH", "pageconfigurationsetcontainer");
         define("ASSET_CONTAINER_SHARED_FIELD_FETCH", "sharedfieldcontainer");
@@ -89,6 +90,7 @@ class ConstantsConstructor
         define("ASSET_FORMAT_XSLT_CREATE", "xsltFormat");
         define("ASSET_SYMLINK_CREATE", "symlink");
         define("ASSET_TEMPLATE_CREATE", "template");
+        define("ASSET_EDITOR_CONFIGURATION_CREATE", "editorConfiguration");
 
 
 

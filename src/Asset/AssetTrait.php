@@ -5,6 +5,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
+use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 trait AssetTrait
 {
@@ -37,6 +38,13 @@ trait AssetTrait
     public function setNewAsset(\stdClass $assetData)
     {
         $this->newAsset = $assetData;
+
+        try {
+            $this->checkInputIntegrity();
+        }catch (InputIntegrityException $e){
+            echo $e->getMessage();
+        }
+
     }
 
     public function assetExists(string $path): bool
@@ -44,40 +52,7 @@ trait AssetTrait
         return (bool)$this->wcms->assetExists($path, $this->assetTypeFetch);
     }
 
-    public function updateAsset()
-    {
-        $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
-    }
 
-    public function rollbackUpdateAsset()
-    {
-        $this->wcms->saveAsset($this->oldAsset, $this->assetTypeCreate);
-    }
-
-
-
-
-
-
-
-
-
-    public function rollbackCreateAsset(){
-        $this->deleteAsset();
-    }
-
-    public function deleteAsset()
-    {
-        if($this->wcms->assetExists($this->oldAsset->path, $this->assetTypeFetch))
-        {
-            $this->wcms->deleteAsset($this->assetTypeFetch, $this->oldAsset->path);
-        }
-    }
-
-    public function rollbackDeleteAsset()
-    {
-
-    }
 
 
     public function getParentPathForCreate()
@@ -165,5 +140,26 @@ trait AssetTrait
             'name' => $name
         ];
 
+    }
+
+    public function checkInputIntegrity()
+    {
+        $this->checkIfSetName();
+    }
+
+    public function checkIfSetName()
+    {
+        $className = $this->getClassName();
+
+        if(!isset($this->newAsset->name)){
+            throw new InputIntegrityException("$className payload: [name] => 'ASSET-NAME' is missing");
+        }
+    }
+
+    public function getClassName(): string
+    {
+        $array = explode('\\', get_called_class());
+
+        return array_pop($array);
     }
 }
