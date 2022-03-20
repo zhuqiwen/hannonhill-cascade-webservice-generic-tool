@@ -3,6 +3,7 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType;
+use Edu\IU\Framework\GenericUpdater\Asset\Containered\DataDefinition;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
@@ -16,7 +17,7 @@ class Page extends Folder {
     {
         //TODO: check content type
         $this->checkExistenceContentType($assetData->contentTypePath);
-
+        $this->checkExistenceDataDefinition($assetData->structuredData->definitionPath);
     }
 
     public function checkExistenceContentType($path)
@@ -26,29 +27,34 @@ class Page extends Folder {
 
     }
 
+    public function checkExistenceDataDefinition($path)
+    {
+        $asset = new DataDefinition($this->wcms);
+        $this->checkExistenceAndThrowException($asset, $path);
+    }
+
     //TODO: check input integrity, such as structured data, parent path, name, etc
 
     public function checkInputIntegrity(\stdClass $asset)
     {
         parent::checkInputIntegrity($asset);
-        $this->checkIfSetXHTMLOrStructuredData($asset);
+        $this->checkIfSetXHTMLOrDataDefinition($asset);
 
 
     }
 
-    public function checkIfSetXHTMLOrStructuredData(\stdClass $asset)
+    public function checkIfSetXHTMLOrDataDefinition(\stdClass $asset)
     {
         $hasXhtmlOrStructuredData = isset($asset->xhtml) && empty(trim($asset->xhtml));
         $hasXhtmlOrStructuredData = $hasXhtmlOrStructuredData
             ||
-            (isset($asset->structuredData) && !empty($asset->structuredData));
+            (isset($asset->structuredData->definitionPath) && !empty($asset->structuredData->definitionPath));
 
         if(!$hasXhtmlOrStructuredData){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
-            $msg .= ", [structuredData] or [xhtml] is required. Please add one by example: ";
+            $msg .= ", [structuredData][definitionPath] or [xhtml] is required. Please add one by example: ";
             throw new InputIntegrityException($msg);
         }
-
     }
 
 }
