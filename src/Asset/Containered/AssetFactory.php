@@ -10,6 +10,12 @@ class AssetFactory extends AssetFactoryContainer {
     public $assetTypeCreate = ASSET_ASSET_FACTORY_CREATE;
 
 
+    public function checkInputIntegrity(\stdClass $assetData)
+    {
+        parent::checkInputIntegrity($assetData);
+        $this->checkIfSetAssetType($assetData);
+    }
+
     public function checkIfSetAssetType(\stdClass $assetData)
     {
         if(!isset($assetData->assetType) || empty(trim($assetData->assetType))){
@@ -19,4 +25,22 @@ class AssetFactory extends AssetFactoryContainer {
             throw new InputIntegrityException($msg);
         }
     }
+
+    public function checkDependencies(\stdClass $assetData)
+    {
+        if (isset($assetData->baseAssetPath) && !empty(trim($assetData->baseAssetPath))){
+            $this->checkExistenceBaseAsset($assetData->baseAssetPath, $assetData->assetType);
+        }
+    }
+
+    public function checkExistenceBaseAsset(string $path, string $assetType)
+    {
+        $childClasses = $this->getChildClassesOf("Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder");
+        $childClass = $childClasses[$assetType];
+
+        $asset = new $childClass($this->wcms);
+        $this->checkExistenceAndThrowException($asset, $path);
+    }
+
+
 }

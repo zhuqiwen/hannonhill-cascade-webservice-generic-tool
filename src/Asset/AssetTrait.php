@@ -182,4 +182,19 @@ trait AssetTrait
             throw new AssetNotFoundException($msg);
         }
     }
+
+
+    public function getChildClassesOf(string $parentClassString): array
+    {
+        $result = [];
+        foreach (get_declared_classes() as $class){
+            if(is_subclass_of($class, $parentClassString)){
+                $array = explode('\\', $class);
+                $assetType = array_pop($array);
+                $result[strtolower($assetType)] = $class;
+            }
+        }
+
+        return $result;
+    }
 }
