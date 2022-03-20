@@ -12,7 +12,9 @@
   "minimum-stability": "dev",
   "require": {
     "iu-vpcm-dc/wcms-webservice": "dev-main",
-    "phpunit/phpunit": "^7.5"
+    "phpunit/phpunit": "^7.5",
+    "ext-libxml": "*",
+    "ext-simplexml": "*"
   },
   "autoload": {
     "psr-4": {
