@@ -171,4 +171,15 @@ trait AssetTrait
 
         return array_pop($array);
     }
+
+    public function checkExistenceAndThrowException(Asset $asset, string $path)
+    {
+        if(!$asset->assetExists($path)){
+            $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
+            $msg .= $asset->assetTypeDisplay;
+            $msg .= ": " . $path;
+            $msg .= " doesn't exist";
+            throw new AssetNotFoundException($msg);
+        }
+    }
 }

@@ -40,12 +40,7 @@ PAGECONFIGEXAMPLE;
     public function checkExistenceTemplate($templatePath): bool
     {
         $template = new Template($this->wcms);
-        if(!$template->assetExists($templatePath)){
-            $msg = $template->assetTypeDisplay;
-            $msg .= ": " . $templatePath;
-            $msg .= " doesn't exist";
-            throw new AssetNotFoundException($msg);
-        }
+        $this->checkExistenceAndThrowException($template, $templatePath);
     }
 
     public function checkConfigurationIntegrity(array $config, int $index)
