@@ -3,6 +3,7 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
 use Edu\IU\Framework\GenericUpdater\Asset\Asset;
+use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSet;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 
 class Folder extends Asset {
@@ -66,6 +67,21 @@ class Folder extends Asset {
             'name' => $grantParentName
         ];
 
+    }
+
+
+    public function checkDependencies(\stdClass $assetData)
+    {
+        parent::checkDependencies($assetData);
+        if(isset($assetData->metadataSetPath) && !empty(trim($assetData->metadataSetPath))){
+            $this->checkExistenceMetadataSet();
+        }
+    }
+
+    public function checkExistenceMetadataSet(string $path)
+    {
+        $asset = new MetadataSet($this->wcms);
+        $this->checkExistenceAndThrowException($asset, $path);
     }
 
 }

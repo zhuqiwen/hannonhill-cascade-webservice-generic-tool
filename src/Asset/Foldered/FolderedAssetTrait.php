@@ -2,6 +2,7 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
+use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSet;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 trait FolderedAssetTrait {
@@ -21,4 +22,5 @@ trait FolderedAssetTrait {
             throw new InputIntegrityException("$className payload: [parentFolderPath] => 'PATH-TO-PARENT' is missing");
         }
     }
+
 }

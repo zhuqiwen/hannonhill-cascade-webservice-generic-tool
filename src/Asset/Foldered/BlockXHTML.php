@@ -14,7 +14,7 @@ class BlockXHTML extends Folder {
 
     public function checkDependencies(\stdClass $assetData)
     {
-        //TODO: check content type
+        parent::checkDependencies($assetData);
         $this->checkExistenceDataDefinition($assetData->structuredData->definitionPath);
     }
 

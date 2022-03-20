@@ -15,7 +15,7 @@ class Page extends Folder {
 
     public function checkDependencies(\stdClass $assetData)
     {
-        //TODO: check content type
+        parent::checkDependencies($assetData);
         $this->checkExistenceContentType($assetData->contentTypePath);
         $this->checkExistenceDataDefinition($assetData->structuredData->definitionPath);
     }
