@@ -5,6 +5,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSet;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
+use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class Folder extends Asset {
 
@@ -84,4 +85,17 @@ class Folder extends Asset {
         $this->checkExistenceAndThrowException($asset, $path);
     }
 
+    public function checkIfSetXHTMLOrDataDefinition(\stdClass $asset)
+    {
+        $hasXhtmlOrStructuredData = isset($asset->xhtml) && empty(trim($asset->xhtml));
+        $hasXhtmlOrStructuredData = $hasXhtmlOrStructuredData
+            ||
+            (isset($asset->structuredData->definitionPath) && !empty($asset->structuredData->definitionPath));
+
+        if(!$hasXhtmlOrStructuredData){
+            $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
+            $msg .= ", [structuredData][definitionPath] or [xhtml] is required. Please add one by example: ";
+            throw new InputIntegrityException($msg);
+        }
+    }
 }
