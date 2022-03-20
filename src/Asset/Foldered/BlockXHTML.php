@@ -28,8 +28,6 @@ class BlockXHTML extends Folder {
     {
         parent::checkInputIntegrity($assetData);
         $this->checkIfSetXHTMLOrDataDefinition($assetData);
-
-
     }
 
     public function checkIfSetXHTMLOrDataDefinition(\stdClass $asset)
