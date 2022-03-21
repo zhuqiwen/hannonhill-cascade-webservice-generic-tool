@@ -41,6 +41,7 @@ class Folder extends Asset {
     {
         $asset = $this->getGrantParentAssetForCreate();
         $path = $asset->parentFolderPath . DIRECTORY_SEPARATOR . $asset->name;
+        $path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 
         if ($path == DIRECTORY_SEPARATOR)
         {
@@ -87,12 +88,10 @@ class Folder extends Asset {
 
     public function checkIfSetXHTMLOrDataDefinition(\stdClass $asset)
     {
-        $hasXhtmlOrStructuredData = isset($asset->xhtml) && empty(trim($asset->xhtml));
-        $hasXhtmlOrStructuredData = $hasXhtmlOrStructuredData
-            ||
-            (isset($asset->structuredData->definitionPath) && !empty($asset->structuredData->definitionPath));
+        $hasXhtml = isset($asset->xhtml) && !empty(trim($asset->xhtml));
+        $hasStructuredData = isset($asset->structuredData->definitionPath) && !empty($asset->structuredData->definitionPath);
 
-        if(!$hasXhtmlOrStructuredData){
+        if(!$hasXhtml && !$hasStructuredData){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= ", [structuredData][definitionPath] or [xhtml] is required. Please add one by example: ";
             throw new InputIntegrityException($msg);
