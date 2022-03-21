@@ -37,7 +37,7 @@ class DataDefinition extends DataDefinitionContainer {
     public function checkDependencies(\stdClass $assetData)
     {
         parent::checkDependencies($assetData);
-        $this->checkExistencSharedFields($assetData->xml);
+        $this->checkExistenceSharedFields($assetData->xml);
 
     }
 
