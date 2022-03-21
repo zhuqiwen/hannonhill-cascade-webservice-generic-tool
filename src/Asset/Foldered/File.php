@@ -6,9 +6,9 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class File extends Folder {
-    public $assetTypeDisplay = "File";
-    public $assetTypeFetch = ASSET_FILE_FETCH;
-    public $assetTypeCreate = ASSET_FILE_CREATE;
+    protected $assetTypeDisplay = "File";
+    protected $assetTypeFetch = ASSET_FILE_FETCH;
+    protected $assetTypeCreate = ASSET_FILE_CREATE;
 
 
     public function checkInputIntegrity()

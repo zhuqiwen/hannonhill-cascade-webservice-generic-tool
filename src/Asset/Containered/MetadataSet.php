@@ -3,8 +3,8 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 
 class MetadataSet extends MetadataSetContainer {
-    public $assetTypeDisplay = "Metadata Set";
-    public $assetTypeFetch = ASSET_METADATA_SET_FETCH;
-    public $assetTypeCreate = ASSET_METADATA_SET_CREATE;
+    protected $assetTypeDisplay = "Metadata Set";
+    protected $assetTypeFetch = ASSET_METADATA_SET_FETCH;
+    protected $assetTypeCreate = ASSET_METADATA_SET_CREATE;
 
 }

@@ -7,7 +7,7 @@ use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 class SharedFieldContainer extends Asset {
     use ContaineredAssetTrait;
 
-    public $assetTypeDisplay = "Shared Field Container";
-    public $assetTypeFetch = ASSET_CONTAINER_SHARED_FIELD_FETCH;
-    public $assetTypeCreate = ASSET_CONTAINER_SHARED_FIELD_CREATE;
+    protected $assetTypeDisplay = "Shared Field Container";
+    protected $assetTypeFetch = ASSET_CONTAINER_SHARED_FIELD_FETCH;
+    protected $assetTypeCreate = ASSET_CONTAINER_SHARED_FIELD_CREATE;
 }

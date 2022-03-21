@@ -7,7 +7,7 @@ use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 class DataDefinitionContainer extends Asset {
     use ContaineredAssetTrait;
 
-    public $assetTypeDisplay = "Data Definition Container";
-    public $assetTypeFetch = ASSET_CONTAINER_DATA_DEFINITION_FETCH;
-    public $assetTypeCreate = ASSET_CONTAINER_DATA_DEFINITION_CREATE;
+    protected $assetTypeDisplay = "Data Definition Container";
+    protected $assetTypeFetch = ASSET_CONTAINER_DATA_DEFINITION_FETCH;
+    protected $assetTypeCreate = ASSET_CONTAINER_DATA_DEFINITION_CREATE;
 }

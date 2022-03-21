@@ -5,9 +5,9 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class Symlink extends Folder {
-    public $assetTypeDisplay = "Symlink";
-    public $assetTypeFetch = ASSET_SYMLINK_FETCH;
-    public $assetTypeCreate = ASSET_SYMLINK_CREATE;
+    protected $assetTypeDisplay = "Symlink";
+    protected $assetTypeFetch = ASSET_SYMLINK_FETCH;
+    protected $assetTypeCreate = ASSET_SYMLINK_CREATE;
 
 
     public function checkInputIntegrity()

@@ -7,8 +7,8 @@ use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 class MetadataSetContainer extends Asset {
     use ContaineredAssetTrait;
 
-    public $assetTypeDisplay = "Metadata Set Container";
-    public $assetTypeFetch = ASSET_CONTAINER_METADATA_SET_FETCH;
-    public $assetTypeCreate = ASSET_CONTAINER_METADATA_SET_CREATE;
+    protected $assetTypeDisplay = "Metadata Set Container";
+    protected $assetTypeFetch = ASSET_CONTAINER_METADATA_SET_FETCH;
+    protected $assetTypeCreate = ASSET_CONTAINER_METADATA_SET_CREATE;
 
 }

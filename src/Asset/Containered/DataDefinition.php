@@ -6,9 +6,9 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class DataDefinition extends DataDefinitionContainer {
-    public $assetTypeDisplay = "Data Definition";
-    public $assetTypeFetch = ASSET_DATA_DEFINITION_FETCH;
-    public $assetTypeCreate = ASSET_DATA_DEFINITION_CREATE;
+    protected $ssetTypeDisplay = "Data Definition";
+    protected $assetTypeFetch = ASSET_DATA_DEFINITION_FETCH;
+    protected $assetTypeCreate = ASSET_DATA_DEFINITION_CREATE;
 
     public function checkInputIntegrity()
     {

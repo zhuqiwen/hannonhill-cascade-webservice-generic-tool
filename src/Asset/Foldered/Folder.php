@@ -11,9 +11,9 @@ class Folder extends Asset {
 
     use FolderedAssetTrait;
 
-    public $assetTypeDisplay = "Folder";
-    public $assetTypeFetch = ASSET_FOLDER_FETCH;
-    public $assetTypeCreate = ASSET_FOLDER_CREATE;
+    protected $assetTypeDisplay = "Folder";
+    protected $assetTypeFetch = ASSET_FOLDER_FETCH;
+    protected $assetTypeCreate = ASSET_FOLDER_CREATE;
 
 
     public function createAsset()

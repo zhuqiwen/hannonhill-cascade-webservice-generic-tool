@@ -13,11 +13,13 @@ trait AssetTrait
 
     protected $wcms;
     protected $namespace;
-    public $oldAsset;
-    public $newAsset;
-    public $assetTypeDisplay;
-    public $assetTypeFetch;
-    public $assetTypeCreate;
+    protected $oldAsset;
+    protected $newAsset;
+    protected $siteName;
+    protected $assetTypeDisplay;
+    protected $assetTypeFetch;
+    protected $assetTypeCreate;
+    protected $ssetTypeDisplay;
 
 
 
@@ -283,6 +285,11 @@ trait AssetTrait
         }
 
         return clone $this->oldAsset;
+    }
+
+    public function getSiteName()
+    {
+        return $this->siteName;
     }
 
 }

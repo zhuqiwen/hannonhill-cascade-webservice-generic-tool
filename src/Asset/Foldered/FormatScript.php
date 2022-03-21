@@ -6,9 +6,9 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class FormatScript extends Format {
-    public $assetTypeDisplay = "Velocity Format";
-    public $assetTypeCreate = ASSET_FORMAT_SCRIPT_CREATE;
-    public $assetTypeFetch = ASSET_FORMAT_SCRIPT_FETCH;
+    protected $assetTypeDisplay = "Velocity Format";
+    protected $assetTypeCreate = ASSET_FORMAT_SCRIPT_CREATE;
+    protected $assetTypeFetch = ASSET_FORMAT_SCRIPT_FETCH;
 
 
     public function checkInputIntegrity()

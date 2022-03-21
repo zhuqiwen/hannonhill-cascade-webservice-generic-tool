@@ -7,7 +7,7 @@ use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 class ContentTypeContainer extends Asset {
     use ContaineredAssetTrait;
 
-    public $assetTypeDisplay = "Content Type Container";
-    public $assetTypeFetch = ASSET_CONTAINER_CONTENT_TYPE_FETCH;
-    public $assetTypeCreate = ASSET_CONTAINER_CONTENT_TYPE_CREATE;
+    protected $assetTypeDisplay = "Content Type Container";
+    protected $assetTypeFetch = ASSET_CONTAINER_CONTENT_TYPE_FETCH;
+    protected $assetTypeCreate = ASSET_CONTAINER_CONTENT_TYPE_CREATE;
 }

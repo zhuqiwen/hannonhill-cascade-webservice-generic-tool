@@ -7,9 +7,9 @@ use Edu\IU\Framework\GenericUpdater\Asset\Containered\DataDefinition;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class BlockXHTML extends Block {
-    public $assetTypeDisplay = "Block";
-    public $assetTypeFetch = ASSET_BLOCK_XHTML_FETCH;
-    public $assetTypeCreate = ASSET_BLOCK_XHTML_CREATE;
+    protected $assetTypeDisplay = "Block";
+    protected $assetTypeFetch = ASSET_BLOCK_XHTML_FETCH;
+    protected $assetTypeCreate = ASSET_BLOCK_XHTML_CREATE;
 
 
     public function checkDependencies()

@@ -7,9 +7,9 @@ use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class PageConfigurationSet extends PageConfigurationSetContainer {
-    public $assetTypeDisplay = "Page Configuration Set";
-    public $assetTypeFetch = ASSET_PAGE_CONFIGURATION_SET_FETCH;
-    public $assetTypeCreate = ASSET_PAGE_CONFIGURATION_SET_CREATE;
+    protected $assetTypeDisplay = "Page Configuration Set";
+    protected $assetTypeFetch = ASSET_PAGE_CONFIGURATION_SET_FETCH;
+    protected $assetTypeCreate = ASSET_PAGE_CONFIGURATION_SET_CREATE;
 
     public $pageConfigurationsExample = <<< PAGECONFIGEXAMPLE
 [

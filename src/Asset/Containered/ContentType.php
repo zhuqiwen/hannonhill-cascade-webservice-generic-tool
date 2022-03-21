@@ -6,9 +6,9 @@ use Edu\IU\Framework\GenericUpdater\Asset\WysiwygEditorConfiguration;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class ContentType extends ContentTypeContainer {
-    public $assetTypeDisplay = "Content Type";
-    public $assetTypeFetch = ASSET_CONTENT_TYPE_FETCH;
-    public $assetTypeCreate = ASSET_CONTENT_TYPE_CREATE;
+    protected $assetTypeDisplay = "Content Type";
+    protected $assetTypeFetch = ASSET_CONTENT_TYPE_FETCH;
+    protected $assetTypeCreate = ASSET_CONTENT_TYPE_CREATE;
 
 
 

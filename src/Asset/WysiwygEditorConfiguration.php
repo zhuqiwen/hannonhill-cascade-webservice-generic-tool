@@ -4,9 +4,9 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 class WysiwygEditorConfiguration extends Asset{
 
-    public  $assetTypeDisplay = "WYSIWYG Editor Configuration";
-    public  $assetTypeFetch = ASSET_EDITOR_CONFIGURATION_FETCH;
-    public  $assetTypeCreate = ASSET_EDITOR_CONFIGURATION_CREATE;
+    protected  $assetTypeDisplay = "WYSIWYG Editor Configuration";
+    protected  $assetTypeFetch = ASSET_EDITOR_CONFIGURATION_FETCH;
+    protected  $assetTypeCreate = ASSET_EDITOR_CONFIGURATION_CREATE;
 
 
 

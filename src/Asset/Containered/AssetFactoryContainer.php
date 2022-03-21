@@ -7,7 +7,7 @@ use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 class AssetFactoryContainer extends Asset {
     use ContaineredAssetTrait;
 
-    public $assetTypeDisplay = "Asset Factory Container";
-    public $assetTypeFetch = ASSET_CONTAINER_ASSET_FACTORY_FETCH;
-    public $assetTypeCreate = ASSET_CONTAINER_ASSET_FACTORY_CREATE;
+    protected $assetTypeDisplay = "Asset Factory Container";
+    protected $assetTypeFetch = ASSET_CONTAINER_ASSET_FACTORY_FETCH;
+    protected $assetTypeCreate = ASSET_CONTAINER_ASSET_FACTORY_CREATE;
 }

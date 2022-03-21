@@ -5,9 +5,9 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class AssetFactory extends AssetFactoryContainer {
-    public $assetTypeDisplay = "Asset Factory";
-    public $assetTypeFetch = ASSET_ASSET_FACTORY_FETCH;
-    public $assetTypeCreate = ASSET_ASSET_FACTORY_CREATE;
+    protected $assetTypeDisplay = "Asset Factory";
+    protected $assetTypeFetch = ASSET_ASSET_FACTORY_FETCH;
+    protected $assetTypeCreate = ASSET_ASSET_FACTORY_CREATE;
 
 
     public function checkInputIntegrity()
