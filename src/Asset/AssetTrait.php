@@ -12,16 +12,66 @@ trait AssetTrait
 {
 
     protected $wcms;
-    protected $namespace;
     protected $oldAsset;
     protected $newAsset;
     protected $siteName;
     protected $assetTypeDisplay;
     protected $assetTypeFetch;
     protected $assetTypeCreate;
-    protected $ssetTypeDisplay;
 
 
+    /**
+     * @return mixed
+     */
+    public function getAssetTypeCreate()
+    {
+        return $this->assetTypeCreate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAssetTypeFetch()
+    {
+        return $this->assetTypeFetch;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAssetTypeDisplay()
+    {
+        return $this->assetTypeDisplay;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldAsset()
+    {
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSiteName()
+    {
+        return $this->siteName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewAsset()
+    {
+        if(!isset($this->newAsset))
+        {
+            throw new RuntimeException("newAsset has not been set");
+        }
+
+        return clone $this->newAsset;
+    }
 
 
 
@@ -70,7 +120,7 @@ trait AssetTrait
         if ($this->assetExists($path)){
             $this->wcms->deleteAsset($this->assetTypeFetch, $path);
             $msg = "Asset: " . $this->assetTypeDisplay;
-            $msg .= " with path: " . $this->oldAsset->path;
+            $msg .= " with path: " . $path;
             $msg .= " has been deleted successfully." . PHP_EOL;
             $this->echoForCLI($msg);
         }
@@ -277,19 +327,5 @@ trait AssetTrait
         }
     }
 
-    public function getOldAsset()
-    {
-        if(!isset($this->oldAsset))
-        {
-            throw new RuntimeException("oldAsset has not been set");
-        }
-
-        return clone $this->oldAsset;
-    }
-
-    public function getSiteName()
-    {
-        return $this->siteName;
-    }
 
 }
