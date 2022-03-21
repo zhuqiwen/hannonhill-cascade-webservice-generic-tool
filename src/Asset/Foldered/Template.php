@@ -10,10 +10,10 @@ class Template extends Folder {
     public $assetTypeCreate = ASSET_TEMPLATE_CREATE;
 
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetXML($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetXML();
     }
 
 

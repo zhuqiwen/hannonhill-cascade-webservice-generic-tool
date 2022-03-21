@@ -11,20 +11,18 @@ class File extends Folder {
     public $assetTypeCreate = ASSET_FILE_CREATE;
 
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetTextOrData($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetTextOrData();
     }
 
-    public function checkIfSetTextOrData(\stdClass $asset)
+    public function checkIfSetTextOrData()
     {
-        $hasTextOrData = isset($asset->text) && empty(trim($asset->text));
-        $hasTextOrData = $hasTextOrData
-            ||
-            (isset($asset->data) && !empty($asset->data));
+        $hasText = isset($this->newAsset->text) && empty(trim($this->newAsset->text));
+        $hasData = isset($this->newAsset->data) && !empty($this->newAsset->data);
 
-        if(!$hasTextOrData){
+        if(!$hasText && !$hasData){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= ", [data] or [text] is required. Please add one by example: ";
             throw new InputIntegrityException($msg);

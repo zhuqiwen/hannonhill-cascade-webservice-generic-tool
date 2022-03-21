@@ -10,17 +10,17 @@ class Symlink extends Folder {
     public $assetTypeCreate = ASSET_SYMLINK_CREATE;
 
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetLinkURL($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetLinkURL();
     }
 
-    public function checkIfSetLinkURL(\stdClass $asset)
+    public function checkIfSetLinkURL()
     {
-        $isURL = filter_var($asset->linkURL, FILTER_VALIDATE_URL);
+        $isURL = filter_var($this->newAsset->linkURL, FILTER_VALIDATE_URL);
 
-        if(!isset($asset->linkURL) || empty(trim($asset->linkURL))){
+        if(!isset($this->newAsset->linkURL) || empty(trim($this->newAsset->linkURL))){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= ", [linkURL] is required. Please add one by example: ";
             throw new InputIntegrityException($msg);

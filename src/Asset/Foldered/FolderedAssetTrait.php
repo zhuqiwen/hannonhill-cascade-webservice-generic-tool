@@ -8,17 +8,17 @@ use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 trait FolderedAssetTrait {
 
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        $this->checkIfSetParentPath($assetData);
-        $this->checkIfSetName($assetData);
+        $this->checkIfSetParentPath();
+        $this->checkIfSetName();
     }
 
-    public function checkIfSetParentPath(\stdClass $assetData)
+    public function checkIfSetParentPath()
     {
         $className = $this->getClassName();
 
-        if(!isset($assetData->parentFolderPath)){
+        if(!isset($this->newAsset->parentFolderPath)){
             throw new InputIntegrityException("$className payload: [parentFolderPath] => 'PATH-TO-PARENT' is missing");
         }
     }

@@ -37,10 +37,11 @@ trait AssetTrait
 
     public function setNewAsset(\stdClass $assetData)
     {
+        $this->newAsset = $assetData;
+
         try {
-            $this->checkInputIntegrity($assetData);
-            $this->checkDependencies($assetData);
-            $this->newAsset = $assetData;
+            $this->checkInputIntegrity();
+            $this->checkDependencies();
         }catch (InputIntegrityException $e){
             $msg = $e->getMessage() . PHP_EOL;
             $msg .= "Task aborted." . PHP_EOL;
@@ -146,21 +147,21 @@ trait AssetTrait
 
     }
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        $this->checkIfSetName($assetData);
+        $this->checkIfSetName();
     }
 
-    public function checkIfSetName(\stdClass $assetData)
+    public function checkIfSetName()
     {
         $className = $this->getClassName();
 
-        if(!isset($assetData->name)){
+        if(!isset($this->newAsset->name)){
             throw new InputIntegrityException("$className payload: [name] => 'ASSET-NAME' is missing");
         }
     }
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
 
     }
@@ -213,12 +214,12 @@ trait AssetTrait
         return compact('isValidXML', 'xmlErrors');
     }
 
-    public function checkIfSetXML(\stdClass $asset)
+    public function checkIfSetXML()
     {
-        $checkResult = $this->isValidXML($asset->xml);
+        $checkResult = $this->isValidXML($this->newAsset->xml);
         extract($checkResult);
 
-        if(!isset($asset->xml) || empty(trim($asset->xml))){
+        if(!isset($this->newAsset->xml) || empty(trim($this->newAsset->xml))){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= ", [xml] is required. Please add one by example: ";
             throw new InputIntegrityException($msg);

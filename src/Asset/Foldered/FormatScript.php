@@ -11,15 +11,15 @@ class FormatScript extends Format {
     public $assetTypeFetch = ASSET_FORMAT_SCRIPT_FETCH;
 
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetScript($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetScript();
     }
 
-    public function checkIfSetScript(\stdClass $asset)
+    public function checkIfSetScript()
     {
-        if(!isset($asset->script) || empty(trim($asset->script))){
+        if(!isset($this->newAsset->script) || empty(trim($this->newAsset->script))){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= ", [script] is required. Please add one by example: ";
             throw new InputIntegrityException($msg);

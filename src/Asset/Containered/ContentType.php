@@ -15,18 +15,18 @@ class ContentType extends ContentTypeContainer {
 
 
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetPageConfigurationSetPath($assetData);
-        $this->checkIfSetMetaDataSetPath($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetPageConfigurationSetPath();
+        $this->checkIfSetMetaDataSetPath();
     }
 
-    public function checkIfSetPageConfigurationSetPath(\stdClass $assetData)
+    public function checkIfSetPageConfigurationSetPath()
     {
-        $pathExists = isset($assetData->pageConfigurationSetPath)
+        $pathExists = isset($this->newAsset->pageConfigurationSetPath)
             ||
-            !empty(trim($assetData->pageConfigurationSetPath));
+            !empty(trim($this->newAsset->pageConfigurationSetPath));
         if(!$pathExists){
             $msg = $this->getClassName();
             $msg .= " payload:";
@@ -35,11 +35,11 @@ class ContentType extends ContentTypeContainer {
         }
     }
 
-    public function checkIfSetMetaDataSetPath(\stdClass $assetData)
+    public function checkIfSetMetaDataSetPath()
     {
-        $pathExists = isset($assetData->metadataSetPath)
+        $pathExists = isset($this->newAsset->metadataSetPath)
             ||
-            !empty(trim($assetData->metadataSetPath));
+            !empty(trim($this->newAsset->metadataSetPath));
         if(!$pathExists){
             $msg = $this->getClassName();
             $msg .= " payload:";
@@ -48,18 +48,18 @@ class ContentType extends ContentTypeContainer {
         }
     }
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
 
-        $this->checkExistencePageConfigurationSet($assetData->pageConfigurationSetPath);
-        $this->checkExistenceMetadataSet($assetData->metadataSetPath);
+        $this->checkExistencePageConfigurationSet($this->newAsset->pageConfigurationSetPath);
+        $this->checkExistenceMetadataSet($this->newAsset->metadataSetPath);
         //since Data Definition path is not required when creating a Content Type
-        if(isset($assetData->dataDefinitionPath) && !empty(trim($assetData->dataDefinitionPath))){
-            $this->checkExistenceDataDefinition($assetData->dataDefinitionPath);
+        if(isset($this->newAsset->dataDefinitionPath) && !empty(trim($this->newAsset->dataDefinitionPath))){
+            $this->checkExistenceDataDefinition($this->newAsset->dataDefinitionPath);
         }
         //since editor configuration is not required when creating a Content Type
-        if(isset($assetData->editorConfigurationPath) && !empty(trim($assetData->editorConfigurationPath))){
-            $this->checkExistenceEditorConfiguration($assetData->editorConfigurationPath);
+        if(isset($this->newAsset->editorConfigurationPath) && !empty(trim($this->newAsset->editorConfigurationPath))){
+            $this->checkExistenceEditorConfiguration($this->newAsset->editorConfigurationPath);
         }
 
 

@@ -10,11 +10,11 @@ class DataDefinition extends DataDefinitionContainer {
     public $assetTypeFetch = ASSET_DATA_DEFINITION_FETCH;
     public $assetTypeCreate = ASSET_DATA_DEFINITION_CREATE;
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetXML($assetData);
-        $this->checkIfValidXMLForDataDefinition($assetData->xml);
+        parent::checkInputIntegrity();
+        $this->checkIfSetXML();
+        $this->checkIfValidXMLForDataDefinition();
     }
 
 
@@ -23,9 +23,9 @@ class DataDefinition extends DataDefinitionContainer {
      * @param string $xml
      * check if xml's root is <system-data-structure/>
      */
-    public function checkIfValidXMLForDataDefinition(string $xml)
+    public function checkIfValidXMLForDataDefinition()
     {
-        $xmlObj = simplexml_load_string($xml);
+        $xmlObj = simplexml_load_string($$this->newAsset->xml);
         if($xmlObj->getName() != "system-data-structure"){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= ", the value of [xml] should have root node named '<system-data-structure/>'" .PHP_EOL;
@@ -34,15 +34,16 @@ class DataDefinition extends DataDefinitionContainer {
     }
 
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
-        parent::checkDependencies($assetData);
-        $this->checkExistenceSharedFields($assetData->xml);
+        parent::checkDependencies();
+        $this->checkExistenceSharedFields();
 
     }
 
-    public function checkExistenceSharedFields(string $xml)
+    public function checkExistenceSharedFields()
     {
+        $xml = $this->newAsset->xml;
         //TODO: get nodes of <shared-field>
         //
 

@@ -72,10 +72,10 @@ class Folder extends Asset {
     }
 
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
-        parent::checkDependencies($assetData);
-        if(isset($assetData->metadataSetPath) && !empty(trim($assetData->metadataSetPath))){
+        parent::checkDependencies();
+        if(isset($this->newAsset->metadataSetPath) && !empty(trim($this->newAsset->metadataSetPath))){
             $this->checkExistenceMetadataSet();
         }
     }
@@ -86,10 +86,10 @@ class Folder extends Asset {
         $this->checkExistenceAndThrowException($asset, $path);
     }
 
-    public function checkIfSetXHTMLOrDataDefinition(\stdClass $asset)
+    public function checkIfSetXHTMLOrDataDefinition()
     {
-        $hasXhtml = isset($asset->xhtml) && !empty(trim($asset->xhtml));
-        $hasStructuredData = isset($asset->structuredData->definitionPath) && !empty($asset->structuredData->definitionPath);
+        $hasXhtml = isset($this->newAsset->xhtml) && !empty(trim($this->newAsset->xhtml));
+        $hasStructuredData = isset($this->newAsset->structuredData->definitionPath) && !empty($this->newAsset->structuredData->definitionPath);
 
         if(!$hasXhtml && !$hasStructuredData){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();

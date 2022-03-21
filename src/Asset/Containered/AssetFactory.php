@@ -10,15 +10,15 @@ class AssetFactory extends AssetFactoryContainer {
     public $assetTypeCreate = ASSET_ASSET_FACTORY_CREATE;
 
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetAssetType($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetAssetType();
     }
 
-    public function checkIfSetAssetType(\stdClass $assetData)
+    public function checkIfSetAssetType()
     {
-        if(!isset($assetData->assetType) || empty(trim($assetData->assetType))){
+        if(!isset($this->newAsset->assetType) || empty(trim($this->newAsset->assetType))){
             $msg = $this->getClassName();
             $msg .= " payload:";
             $msg .= " [assetType] is missing or has empty value. Supported values: 'page', 'file', 'folder', 'format', 'symlink', 'template', and 'block'";
@@ -26,10 +26,10 @@ class AssetFactory extends AssetFactoryContainer {
         }
     }
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
-        if (isset($assetData->baseAssetPath) && !empty(trim($assetData->baseAssetPath))){
-            $this->checkExistenceBaseAsset($assetData->baseAssetPath, $assetData->assetType);
+        if (isset($this->newAsset->baseAssetPath) && !empty(trim($this->newAsset->baseAssetPath))){
+            $this->checkExistenceBaseAsset($this->newAsset->baseAssetPath, $this->newAsset->assetType);
         }
     }
 

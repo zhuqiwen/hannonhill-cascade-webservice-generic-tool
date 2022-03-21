@@ -12,10 +12,10 @@ class BlockXHTML extends Block {
     public $assetTypeCreate = ASSET_BLOCK_XHTML_CREATE;
 
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
-        parent::checkDependencies($assetData);
-        $this->checkExistenceDataDefinition($assetData->structuredData->definitionPath);
+        parent::checkDependencies();
+        $this->checkExistenceDataDefinition($this->newAsset->structuredData->definitionPath);
     }
 
     public function checkExistenceDataDefinition($path)
@@ -24,10 +24,10 @@ class BlockXHTML extends Block {
         $this->checkExistenceAndThrowException($asset, $path);
     }
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetXHTMLOrDataDefinition($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetXHTMLOrDataDefinition();
     }
 
 }

@@ -13,11 +13,11 @@ class Page extends Folder {
     public  $assetTypeCreate = ASSET_PAGE_CREATE;
 
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
-        parent::checkDependencies($assetData);
-        $this->checkExistenceContentType($assetData->contentTypePath);
-        $this->checkExistenceDataDefinition($assetData->structuredData->definitionPath);
+        parent::checkDependencies();
+        $this->checkExistenceContentType($this->newAsset->contentTypePath);
+        $this->checkExistenceDataDefinition($this->newAsset->structuredData->definitionPath);
     }
 
     public function checkExistenceContentType($path)
@@ -33,10 +33,10 @@ class Page extends Folder {
         $this->checkExistenceAndThrowException($asset, $path);
     }
 
-    public function checkInputIntegrity(\stdClass $asset)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($asset);
-        $this->checkIfSetXHTMLOrDataDefinition($asset);
+        parent::checkInputIntegrity();
+        $this->checkIfSetXHTMLOrDataDefinition();
 
 
     }

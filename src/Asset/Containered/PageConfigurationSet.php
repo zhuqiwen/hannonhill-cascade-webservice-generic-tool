@@ -28,9 +28,9 @@ class PageConfigurationSet extends PageConfigurationSetContainer {
 PAGECONFIGEXAMPLE;
 
 
-    public function checkDependencies(\stdClass $assetData)
+    public function checkDependencies()
     {
-        $configurations = $assetData->pageConfigurations->pageConfiguration;
+        $configurations = $this->newAsset->pageConfigurations->pageConfiguration;
         foreach ($configurations as $index => $config){
             $this->checkConfigurationIntegrity($config, $index);
             $this->checkExistenceTemplate($config->templatePath);
@@ -63,16 +63,16 @@ PAGECONFIGEXAMPLE;
         }
     }
 
-    public function checkInputIntegrity(\stdClass $assetData)
+    public function checkInputIntegrity()
     {
-        parent::checkInputIntegrity($assetData);
-        $this->checkIfSetPageConfigurations($assetData);
+        parent::checkInputIntegrity();
+        $this->checkIfSetPageConfigurations();
 
     }
 
-    public function checkIfSetPageConfigurations(\stdClass $assetData)
+    public function checkIfSetPageConfigurations()
     {
-        $pageConfigurationsExist = isset($assetData->pageConfigurations->pageConfiguration);
+        $pageConfigurationsExist = isset($this->newAsset->pageConfigurations->pageConfiguration);
 
         if(!$pageConfigurationsExist){
             $msg = "Missing inputs of pageConfigurations. Please add one by example: ";
