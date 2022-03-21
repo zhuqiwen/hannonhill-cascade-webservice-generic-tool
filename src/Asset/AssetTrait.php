@@ -6,6 +6,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
+use phpDocumentor\Reflection\Types\This;
 
 trait AssetTrait
 {
@@ -52,6 +53,24 @@ trait AssetTrait
             die($msg);
         }
 
+    }
+
+    public function deleteAsset(string $path = "")
+    {
+        if(!isset($this->oldAsset->path) && empty(trim($path))){
+            $msg = "Path to the asset of " . $this->assetTypeDisplay . " must be provided either as #1 paremeter for deleteAsset() ";
+            $msg .= " or as #2 parameter for the object constructor.";
+            die($this->echoForCLI($msg));
+        }
+        $path = empty(trim($path)) ? $this->oldAsset->path : $path;
+        if ($this->assetExists($this->oldAsset->path)){
+            $this->wcms->deleteAsset($this->assetTypeFetch, $this->oldAsset->path);
+            $msg = "Asset: " . $this->assetTypeDisplay;
+            $msg .= " with path: " . $this->oldAsset->path;
+            $msg .= " has been deleted successfully." . PHP_EOL;
+            $this->echoForCLI($msg);
+
+        }
     }
 
     public function assetExists(string $path): bool
@@ -231,6 +250,13 @@ trait AssetTrait
             $msg .= "Errors: " . PHP_EOL;
             $msg .= "\t" . print_r($xmlErrors);
             throw new InputIntegrityException($msg);
+        }
+    }
+
+    protected function echoForCLI(string $msg)
+    {
+        if(php_sapi_name() == "cli"){
+            echo $msg . PHP_EOL;
         }
     }
 
