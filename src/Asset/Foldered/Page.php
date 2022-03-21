@@ -4,8 +4,6 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\DataDefinition;
-use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
-use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 class Page extends Folder {
     protected  $assetTypeDisplay = "Page";

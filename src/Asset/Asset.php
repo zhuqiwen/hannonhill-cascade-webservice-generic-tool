@@ -2,8 +2,6 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
-
-use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Wcms\WebService\WCMSClient;
 
 class Asset
