@@ -6,6 +6,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
+use http\Exception\RuntimeException;
 
 trait AssetTrait
 {
@@ -75,6 +76,17 @@ trait AssetTrait
         // pause for 3 seconds for the WCMS database to update status after each deletion in a batch
         sleep(3);
     }
+
+    public function updateAsset(\stdClass $newAsset)
+    {
+
+        $this->setNewAsset($newAsset);
+        $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
+        $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->newAsset->path;
+        $msg .= " has been updated successfully";
+        $this->echoForCLI($msg);
+    }
+
 
     public function assetExists(string $path): bool
     {
@@ -261,6 +273,16 @@ trait AssetTrait
         if(php_sapi_name() == "cli"){
             echo $msg . PHP_EOL;
         }
+    }
+
+    public function getOldAsset()
+    {
+        if(!isset($this->oldAsset))
+        {
+            throw new RuntimeException("oldAsset has not been set");
+        }
+
+        return clone $this->oldAsset;
     }
 
 }

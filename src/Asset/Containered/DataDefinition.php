@@ -46,7 +46,6 @@ class DataDefinition extends DataDefinitionContainer {
         $xml = $this->newAsset->xml;
         //TODO: get nodes of <shared-field>
         //
-
     }
 
 }
