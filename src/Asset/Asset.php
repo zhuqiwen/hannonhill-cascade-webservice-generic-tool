@@ -3,8 +3,8 @@
 namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
+use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Wcms\WebService\WCMSClient;
-use phpDocumentor\Reflection\Types\This;
 
 class Asset
 {

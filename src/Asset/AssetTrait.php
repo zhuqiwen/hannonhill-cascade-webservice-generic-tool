@@ -6,7 +6,6 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
-use phpDocumentor\Reflection\Types\This;
 
 trait AssetTrait
 {
@@ -62,15 +61,19 @@ trait AssetTrait
             $msg .= " or as #2 parameter for the object constructor.";
             die($this->echoForCLI($msg));
         }
+
         $path = empty(trim($path)) ? $this->oldAsset->path : $path;
-        if ($this->assetExists($this->oldAsset->path)){
-            $this->wcms->deleteAsset($this->assetTypeFetch, $this->oldAsset->path);
+
+        if ($this->assetExists($path)){
+            $this->wcms->deleteAsset($this->assetTypeFetch, $path);
             $msg = "Asset: " . $this->assetTypeDisplay;
             $msg .= " with path: " . $this->oldAsset->path;
             $msg .= " has been deleted successfully." . PHP_EOL;
             $this->echoForCLI($msg);
-
         }
+
+        // pause for 3 seconds for the WCMS database to update status after each deletion in a batch
+        sleep(3);
     }
 
     public function assetExists(string $path): bool

@@ -25,7 +25,7 @@ class DataDefinition extends DataDefinitionContainer {
      */
     public function checkIfValidXMLForDataDefinition()
     {
-        $xmlObj = simplexml_load_string($$this->newAsset->xml);
+        $xmlObj = simplexml_load_string($this->newAsset->xml);
         if($xmlObj->getName() != "system-data-structure"){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= ", the value of [xml] should have root node named '<system-data-structure/>'" .PHP_EOL;
