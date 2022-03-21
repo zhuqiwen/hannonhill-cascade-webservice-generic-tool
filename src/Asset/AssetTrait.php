@@ -81,7 +81,7 @@ trait AssetTrait
         return $path;
     }
 
-    public function getNewAssetPath()
+    public function getNewAssetPath(): string
     {
         $parentPath = $this->getParentPathForCreate();
 
@@ -203,19 +203,20 @@ trait AssetTrait
         $prev = libxml_use_internal_errors(true);
 
         $doc = simplexml_load_string($xml);
-        $errors = libxml_get_errors();
+        $xmlErrors = libxml_get_errors();
 
         libxml_clear_errors();
         libxml_use_internal_errors($prev);
 
-        $result =  false !== $doc && empty($errors);
+        $isValidXML =  false !== $doc && empty($errors);
 
-        return compact('result', 'errors');
+        return compact('isValidXML', 'xmlErrors');
     }
 
     public function checkIfSetXML(\stdClass $asset)
     {
-        [$isValidXML, $xmlErrors] = $this->isValidXML($asset->xml);
+        $checkResult = $this->isValidXML($asset->xml);
+        extract($checkResult);
 
         if(!isset($asset->xml) || empty(trim($asset->xml))){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
