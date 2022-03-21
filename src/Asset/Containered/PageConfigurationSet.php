@@ -30,20 +30,20 @@ PAGECONFIGEXAMPLE;
 
     public function checkDependencies(\stdClass $assetData)
     {
-        $configurations = $assetData->pageConfigurations['pageConfiguration'];
+        $configurations = $assetData->pageConfigurations->pageConfiguration;
         foreach ($configurations as $index => $config){
             $this->checkConfigurationIntegrity($config, $index);
-            $this->checkExistenceTemplate($config['templatePath']);
+            $this->checkExistenceTemplate($config->templatePath);
         }
     }
 
-    public function checkExistenceTemplate($templatePath): bool
+    public function checkExistenceTemplate($templatePath)
     {
         $template = new Template($this->wcms);
         $this->checkExistenceAndThrowException($template, $templatePath);
     }
 
-    public function checkConfigurationIntegrity(array $config, int $index)
+    public function checkConfigurationIntegrity(\stdClass $config, int $index)
     {
         $requiredKeys = [
             'name' => 'any string',
@@ -54,7 +54,7 @@ PAGECONFIGEXAMPLE;
         ];
         foreach ($requiredKeys as $k => $v)
         {
-            if(!isset($config[$k])){
+            if(!isset($config->$k)){
                 $msg = "In the payload of Page Configuration Set, ";
                 $msg .= "[pageConfigurations][pageConfiguration][$index]";
                 $msg .= "[$k] is required, and its value should be: $v";
@@ -72,7 +72,7 @@ PAGECONFIGEXAMPLE;
 
     public function checkIfSetPageConfigurations(\stdClass $assetData)
     {
-        $pageConfigurationsExist = isset($assetData->pageConfigurations['pageConfiguration']);
+        $pageConfigurationsExist = isset($assetData->pageConfigurations->pageConfiguration);
 
         if(!$pageConfigurationsExist){
             $msg = "Missing inputs of pageConfigurations. Please add one by example: ";
