@@ -17,6 +17,7 @@ trait AssetTrait
     protected $assetTypeDisplay;
     protected $assetTypeFetch;
     protected $assetTypeCreate;
+    protected $containersCreatedOnTheWay = [];
 
 
     /**
@@ -77,6 +78,18 @@ trait AssetTrait
         return clone $this->newAsset;
     }
 
+    /**
+     * @return array
+     */
+    public function getContainersCreatedOnTheWay(): array
+    {
+        return $this->containersCreatedOnTheWay;
+    }
+
+    public function putContainerCreated(\stdClass $parentAsset)
+    {
+        $this->containersCreatedOnTheWay[] = $parentAsset;
+    }
 
 
     public function setOldAsset(string $path)
