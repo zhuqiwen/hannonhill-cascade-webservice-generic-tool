@@ -86,6 +86,14 @@ trait AssetTrait
         return $this->containersCreatedOnTheWay;
     }
 
+    /**
+     * @param array $containersCreatedOnTheWay
+     */
+    public function setContainersCreatedOnTheWay(array $containersCreatedOnTheWay): void
+    {
+        $this->containersCreatedOnTheWay = $containersCreatedOnTheWay;
+    }
+
     public function putContainerCreated(\stdClass $parentAsset)
     {
         $this->containersCreatedOnTheWay[] = $parentAsset;
