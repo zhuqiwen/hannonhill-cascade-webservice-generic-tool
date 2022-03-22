@@ -45,6 +45,15 @@ trait ContaineredAssetTrait {
             $folder = new $parentClass($this->wcms);
             $folder->setNewAsset($asset);
             $folder->createAsset();
+            //set parent container just created
+            $folder->putContainerCreated($asset);
+            //pass parent container info to child
+            $this->setContainersCreatedOnTheWay(
+                array_merge(
+                    $this->getContainersCreatedOnTheWay(),
+                    $folder->getContainersCreatedOnTheWay()
+                )
+            );
         }
 
 
