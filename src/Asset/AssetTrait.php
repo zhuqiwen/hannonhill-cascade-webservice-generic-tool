@@ -6,7 +6,6 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
-use http\Exception\RuntimeException;
 
 trait AssetTrait
 {
@@ -47,9 +46,14 @@ trait AssetTrait
     /**
      * @return mixed
      */
-    public function getOldAsset()
+    public function getOldAsset(): \stdClass
     {
-
+        if(!isset($this->oldAsset) || empty($this->oldAsset)){
+            $msg = "For " . $this->assetTypeDisplay;
+            $msg .= " oldAsset is not set.";
+            throw new \RuntimeException($msg);
+        }
+        return clone $this->oldAsset;
     }
 
     /**
@@ -107,6 +111,30 @@ trait AssetTrait
 
     }
 
+
+    public function createAsset()
+    {
+        $parentClass = get_parent_class(get_called_class());
+        $parentPath = $this->getParentPathForCreate();
+        try {
+            new $parentClass($this->wcms, $parentPath);
+        }catch (AssetNotFoundException $e){
+            echo $e->getMessage() . ", which will be created now." . PHP_EOL;
+            $this->createParent();
+        }catch (\RuntimeException $e){
+            echo $e->getMessage();
+        }
+
+        if(!$this->assetExists($this->getNewAssetPath()))
+        {
+            unset($this->newAsset->path);
+            $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+            echo "The following asset has been created:" . PHP_EOL;
+            print_r($this->newAsset);
+        }
+
+    }
+
     public function deleteAsset(string $path = "")
     {
         if(!isset($this->oldAsset->path) && empty(trim($path))){
@@ -129,14 +157,38 @@ trait AssetTrait
         sleep(3);
     }
 
-    public function updateAsset(\stdClass $newAsset)
+    public function updateAsset()
     {
 
-        $this->setNewAsset($newAsset);
+        if(!isset($this->newAsset)){
+            $msg = "For " . $this->assetTypeDisplay;
+            $msg .= " newAsset is not set. Please call \$asset->setOldAsset(\$assetPath) to set it.";
+            throw new \RuntimeException($msg);
+        }
+
         $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
         $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->newAsset->path;
         $msg .= " has been updated successfully";
         $this->echoForCLI($msg);
+    }
+
+    /**
+     * ROLLBACKs
+     */
+
+    public function rollbackUpdateAsset()
+    {
+        if(!isset($this->oldAsset)){
+            $msg = "For " . $this->assetTypeDisplay;
+            $msg .= " oldAsset is not set. Please call \$asset->setNewAsset(\$assetData) to set it.";
+            throw new \RuntimeException($msg);
+        }
+
+        $this->wcms->saveAsset($this->oldAsset, $this->assetTypeCreate);
+        $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->oldAsset->path;
+        $msg .= " has been restored successfully";
+        $this->echoForCLI($msg);
+
     }
 
 
@@ -180,28 +232,6 @@ trait AssetTrait
         return str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
     }
 
-    public function createAsset()
-    {
-        $parentClass = get_parent_class(get_called_class());
-        $parentPath = $this->getParentPathForCreate();
-        try {
-            new $parentClass($this->wcms, $parentPath);
-        }catch (AssetNotFoundException $e){
-            echo $e->getMessage() . ", which will be created now." . PHP_EOL;
-            $this->createParent();
-        }catch (\RuntimeException $e){
-            echo $e->getMessage();
-        }
-
-        if(!$this->assetExists($this->getNewAssetPath()))
-        {
-            unset($this->newAsset->path);
-            $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
-            echo "The following asset has been created:" . PHP_EOL;
-            print_r($this->newAsset);
-        }
-
-    }
 
     /**
      *
