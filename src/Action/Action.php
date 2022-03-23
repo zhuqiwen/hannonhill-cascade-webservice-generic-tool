@@ -16,7 +16,14 @@ class Action
                 $this->steps = array_merge($this->steps, $asset->getSteps($action));
             }
         }catch (\RuntimeException $e){
-            echo $e->getMessage();
+
+            $errorFiles = $e->getTrace();
+            $errorFile = array_pop($errorFiles);
+            $msg = "In " . $errorFile['file'];
+            $msg .= " on line " . $errorFile['line'] . ": " . PHP_EOL;
+            $msg .= $e->getMessage() . PHP_EOL;
+            $msg .= "Task aborted." . PHP_EOL;
+            die($msg);
         }
 
     }

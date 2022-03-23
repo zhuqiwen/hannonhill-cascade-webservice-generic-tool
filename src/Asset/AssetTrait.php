@@ -449,9 +449,9 @@ trait AssetTrait
                 break;
             default:
                 if(empty(trim($action))){
-                   $msg = 'action cannot be empty string';
+                   $msg = '"action" as 2nd parameter of Action constructor should not be empty string. One of valid values: "create", and "update" should be used.';
                 }else{
-                    $msg = $action . ' is not supported yet';
+                    $msg = "'$action'" . " is not supported yet. 'create', or 'update' should be used as 2nd parameter of Action constructor";
                 }
 
                 throw new \RuntimeException($msg);
