@@ -54,7 +54,11 @@ class Folder extends Asset {
             $folder->setNewAsset($asset);
             $folder->createAsset();
             //set parent container just created
-            $folder->putContainerCreated($asset);
+            $assetInfo = (object)[
+                'class' => get_class($this),
+                'data' => $asset
+            ];
+            $folder->putContainerCreated($assetInfo);
             //pass parent container info to child
             $this->setContainersCreatedOnTheWay(
                 array_merge(

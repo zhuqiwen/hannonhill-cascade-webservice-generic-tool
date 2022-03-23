@@ -4,8 +4,10 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
 
+use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
+use phpDocumentor\Reflection\Types\This;
 
 trait AssetTrait
 {
@@ -212,6 +214,26 @@ trait AssetTrait
 
     }
 
+    public function rollbackCreateAsset()
+    {
+        $msg = "deleting (rolling back of creation): ";
+
+        if(empty($this->containersCreatedOnTheWay)){
+            $assetPath = $this->getParentPathForCreate() . DIRECTORY_SEPARATOR . $this->newAsset->name;
+            $msg .=  $assetPath;
+            $this->echoForCLI($msg);
+            $this->deleteAsset($assetPath);
+        }else{
+            $msg .= $this->getTopAncesterPath();
+            $this->echoForCLI($msg);
+            //get parent class
+            $top = $this->getTopAncesterCreated();
+            $containerClass = $top->class;
+            $topContainer = new $containerClass($this->wcms, $this->getTopAncesterPath());
+            $topContainer->deleteAsset();
+        }
+    }
+
 
     public function assetExists(string $path): bool
     {
@@ -377,6 +399,44 @@ trait AssetTrait
             echo $msg . PHP_EOL;
         }
     }
+
+    protected function getTopAncesterCreated()
+    {
+        if (empty($this->containersCreatedOnTheWay)){
+//            throw new \RuntimeException("containersCreatedOnTheWay is empty");
+            return $this->containersCreatedOnTheWay;
+        }
+
+        return $this->getContainersCreatedOnTheWay()[0];
+    }
+
+    protected function getTopAncesterPath(): string
+    {
+        $top = $this->getTopAncesterCreated();
+        $calledClass = get_called_class();
+
+        if(strpos($calledClass, "Foldered") !== false)
+        {
+            $path = $top->data->parentFolderPath;
+        }
+        elseif(strpos($calledClass, "Containered") !== false)
+        {
+            $path = $top->data->parentContainerPath;
+        }
+        else
+        {
+            $msg = $calledClass;
+            $msg .= " needs to be child of either FolderContainedAsset or ContaineredAsset to be able to create parent folder or container.";
+            throw new \RuntimeException($msg);
+        }
+
+        $path = $path . DIRECTORY_SEPARATOR . $top->data->name;
+
+        return str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+
+    }
+
+
 
 
 }

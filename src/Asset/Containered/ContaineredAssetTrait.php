@@ -46,7 +46,11 @@ trait ContaineredAssetTrait {
             $folder->setNewAsset($asset);
             $folder->createAsset();
             //set parent container just created
-            $folder->putContainerCreated($asset);
+            $assetInfo = (object)[
+                'class' => $parentClass,
+                'data' => $asset
+            ];
+            $folder->putContainerCreated($assetInfo);
             //pass parent container info to child
             $this->setContainersCreatedOnTheWay(
                 array_merge(
