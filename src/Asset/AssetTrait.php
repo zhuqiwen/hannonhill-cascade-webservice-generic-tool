@@ -7,6 +7,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
+use Edu\IU\Framework\GenericUpdater\Step;
 use phpDocumentor\Reflection\Types\This;
 
 trait AssetTrait
@@ -436,6 +437,49 @@ trait AssetTrait
 
     }
 
+
+    public function getSteps(string $action)
+    {
+        switch ($action){
+            case 'update':
+                $steps = $this->getUpdateSteps();
+                break;
+            case 'create':
+                $steps = $this->getCreateSteps();
+                break;
+            default:
+                if(empty(trim($action))){
+                   $msg = 'action cannot be empty string';
+                }else{
+                    $msg = $action . ' is not supported yet';
+                }
+
+                throw new \RuntimeException($msg);
+        }
+
+        return $steps;
+    }
+
+    protected function getUpdateSteps()
+    {
+        $this->echoForCLI("collecting update steps for Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath());
+        $steps = [
+            new Step($this, 'updateAsset')
+        ];
+
+        return $steps;
+    }
+
+    protected function getCreateSteps()
+    {
+        $this->echoForCLI("collecting create steps for Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath());
+
+        $steps = [
+            new Step($this, 'createAsset')
+        ];
+
+        return $steps;
+    }
 
 
 
