@@ -3,18 +3,22 @@
 namespace Edu\IU\Framework\GenericUpdater\Action;
 
 
-class Update
+class Action
 {
     public $steps = [];
     public $appliedSteps = [];
 
 
-    public function __construct(array $assets)
+    public function __construct(array $assets, string $action)
     {
-        foreach ($assets as $asset)
-        {
-            $this->steps = array_merge($this->steps, $asset->getUpdateSteps());
+        try{
+            foreach ($assets as $asset) {
+                $this->steps = array_merge($this->steps, $asset->getSteps($action));
+            }
+        }catch (\RuntimeException $e){
+            echo $e->getMessage();
         }
+
     }
 
 
