@@ -186,7 +186,13 @@ trait AssetTrait
 
         if(!isset($this->newAsset)){
             $msg = "For " . $this->assetTypeDisplay;
-            $msg .= " newAsset is not set. Please call \$asset->setOldAsset(\$assetPath) to set it.";
+            $msg .= " newAsset is not set. Please call \$asset->setNewAsset(\$assetData) to set it.";
+            throw new \RuntimeException($msg);
+        }
+
+        if(!$this->assetExists($this->getNewAssetPath())){
+            $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
+            $msg .= " doesn't exist. Update task could not be performed.";
             throw new \RuntimeException($msg);
         }
 
@@ -204,7 +210,7 @@ trait AssetTrait
     {
         if(!isset($this->oldAsset)){
             $msg = "For " . $this->assetTypeDisplay;
-            $msg .= " oldAsset is not set. Please call \$asset->setNewAsset(\$assetData) to set it.";
+            $msg .= " oldAsset is not set. Please call \$asset->setOldAsset(\$assetPath) to set it.";
             throw new \RuntimeException($msg);
         }
 
@@ -266,6 +272,10 @@ trait AssetTrait
 
     public function getNewAssetPath(): string
     {
+        if(isset($this->newAsset->path) && !empty($this->newAsset->path)){
+            return $this->newAsset->path;
+        }
+
         $parentPath = $this->getParentPathForCreate();
 
         $path = DIRECTORY_SEPARATOR
