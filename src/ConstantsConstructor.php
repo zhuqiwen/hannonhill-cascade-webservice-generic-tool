@@ -11,6 +11,8 @@ class ConstantsConstructor
         define("WSDL", "https://sites.wcms.iu.edu/ws/services/AssetOperationService?wsdl");
         define("DEBUG_MODE", true);
         define("ROOT_CLASS_NAME", "Edu\IU\Framework\GenericUpdater\Asset\Asset");
+        define("REGEX_FOR_SITE_NAME_IN_PATH", "/site:\/\/([^\/]*)\//i");
+
 
 
         $this->defineAssetTypesForCreate();
