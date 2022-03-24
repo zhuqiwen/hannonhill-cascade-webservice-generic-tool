@@ -43,9 +43,36 @@ class DataDefinition extends DataDefinitionContainer {
 
     public function checkExistenceSharedFields()
     {
-        $xml = $this->newAsset->xml;
-        //TODO: get nodes of <shared-field>
-        //
+        if(!isset($this->newAsset->xml) || empty($this->newAsset->xml)){
+            $msg = "For Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
+            $msg .= ", [xml] should be set and the value should valid xml for " . $this->assetTypeDisplay;
+            $msg .= PHP_EOL;
+            throw new \RuntimeException($msg);
+        }
+
+        $xmlObj = simplexml_load_string($this->newAsset->xml);
+        $sharedFieldNodes = $xmlObj->xpath("//shared-field");
+
+        foreach ($sharedFieldNodes as $index => $node){
+            //keep current site name for switch back
+            $currentSiteName = $this->wcms->getSiteName();
+            //check if shared field is from another site; crossing-site dependency
+            $otherSiteName = $this->getSiteNameFromAssetPath($node['path']);
+            $path = $node['path'];
+            $path = str_replace("site://", "" , $path);
+            $path = str_replace($otherSiteName, "" , $path);
+
+            if(!empty($otherSiteName)){
+                $this->wcms->setSiteName($otherSiteName);
+            }
+
+            $sharedField = new SharedField($this->wcms);
+            $this->checkExistenceAndThrowException($sharedField, $path);
+            //switch back site name
+            $this->wcms->setSiteName($currentSiteName);
+        }
+
     }
+
 
 }
