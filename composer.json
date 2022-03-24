@@ -1,7 +1,6 @@
 {
   "name": "iu-webtech/wcms-generic-tool",
   "description": "A generic tool to operation assets in WCMS",
-  "type": "project",
   "license": "GPL-3.0-only",
   "authors": [
     {
