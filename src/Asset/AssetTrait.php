@@ -347,8 +347,8 @@ trait AssetTrait
     {
         if(!$asset->assetExists($path)){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
-            $msg .= $asset->assetTypeDisplay;
-            $msg .= ": " . $path;
+            $msg .= ", " . $asset->assetTypeDisplay;
+            $msg .= " with path: " . $path;
             $msg .= " doesn't exist";
             throw new AssetNotFoundException($msg);
         }
@@ -489,6 +489,17 @@ trait AssetTrait
         ];
 
         return $steps;
+    }
+
+    protected function getSiteNameFromAssetPath(string $path)
+    {
+        preg_match(REGEX_FOR_SITE_NAME_IN_PATH, $path, $matches);
+        $sitename = "";
+        if(!empty($matches)){
+            $sitename = $matches[1];
+        }
+
+        return $sitename;
     }
 
 
