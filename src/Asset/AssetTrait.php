@@ -345,13 +345,18 @@ trait AssetTrait
 
     public function checkExistenceAndThrowException(Asset $asset, string $path)
     {
+        $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
+        $msg .= ", " . $asset->assetTypeDisplay;
+        $msg .= " with path: " . $path;
+
         if(!$asset->assetExists($path)){
-            $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
-            $msg .= ", " . $asset->assetTypeDisplay;
-            $msg .= " with path: " . $path;
-            $msg .= " doesn't exist";
+            $msg .= " doesn't seem to exist in Site: " . $this->wcms->getSiteName() . PHP_EOL;
+            $msg .= "\tOr the API Key doesn't have proper access to the site: " . $this->wcms->getSiteName() . PHP_EOL;
+            $msg .= "\tOr the Site: " . $this->wcms->getSiteName() . " may not exist, and please check the site name carefully.";
             throw new AssetNotFoundException($msg);
         }
+        $msg .= " exists in Site: " . $this->wcms->getSiteName();
+        $this->echoForCLI($msg);
     }
 
 
