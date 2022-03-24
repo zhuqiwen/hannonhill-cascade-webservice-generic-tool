@@ -9,12 +9,18 @@ class Asset
     use AssetTrait;
 
 
-    public function __construct(WCMSClient $wcms, string $path = "")
+    public function __construct(WCMSClient $wcms, $inputs = null)
     {
         $this->wcms = $wcms;
-        if(!empty($path))
+        if(gettype($inputs) == "string" && !empty(trim($inputs)))
         {
-            $this->setOldAsset($path);
+            $this->setOldAsset($inputs);
+        }
+
+        if(gettype($inputs) == "array")
+        {
+            $inputs = json_decode(json_encode($inputs));
+            $this->setNewAsset($inputs);
         }
 
     }
