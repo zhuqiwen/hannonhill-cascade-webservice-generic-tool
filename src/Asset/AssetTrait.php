@@ -5,6 +5,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
 use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder;
+use Edu\IU\Framework\GenericUpdater\Exception\APIKeyException;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 use Edu\IU\Framework\GenericUpdater\Step;
@@ -105,14 +106,19 @@ trait AssetTrait
 
     public function setOldAsset(string $path)
     {
-        if($this->assetExists($path))
-        {
+        try {
             $asset = $this->wcms->fetchAsset($path, $this->assetTypeFetch);
             $this->oldAsset = $asset->{$this->assetTypeCreate};
-        }
-        else
-        {
-            throw new AssetNotFoundException($this->assetTypeDisplay . ": " . $path . " could not be found");
+        }catch (\RuntimeException $e){
+            if (strpos($e->getMessage(), "Unable to identify an entity") !== false){
+                $msg = $this->assetTypeDisplay . ": " . $path;
+                $msg .= " could not be found in Site: " . $this->siteName;
+                throw new AssetNotFoundException($msg);
+            }
+            if (strpos($e->getMessage(), "A valid API Key must be provided") !== false){
+                $msg = "A valid API Key must be provided to access assets in Site: " . $this->siteName;
+                throw new APIKeyException($msg);
+            }
         }
     }
 

@@ -12,6 +12,7 @@ class Asset
     public function __construct(WCMSClient $wcms, $inputs = null)
     {
         $this->wcms = $wcms;
+        $this->siteName = $wcms->getSiteName();
         if(gettype($inputs) == "string" && !empty(trim($inputs)))
         {
             $this->setOldAsset($inputs);
