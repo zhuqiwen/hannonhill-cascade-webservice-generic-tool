@@ -89,7 +89,7 @@ class Folder extends Asset {
     {
         parent::checkDependencies();
         if(isset($this->newAsset->metadataSetPath) && !empty(trim($this->newAsset->metadataSetPath))){
-            $this->checkExistenceMetadataSet();
+            $this->checkExistenceMetadataSet($this->newAsset->metadataSetPath);
         }
     }
 
