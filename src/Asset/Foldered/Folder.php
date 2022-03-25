@@ -16,7 +16,7 @@ class Folder extends Asset {
     protected $assetTypeCreate = ASSET_FOLDER_CREATE;
 
 
-    public function createAsset()
+    public function createAsset(): Asset
     {
         try {
             new Folder($this->wcms, $this->newAsset->parentFolderPath);
@@ -35,6 +35,8 @@ class Folder extends Asset {
             echo "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
             echo "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
         }
+
+        return $this;
     }
 
     public function createParent()

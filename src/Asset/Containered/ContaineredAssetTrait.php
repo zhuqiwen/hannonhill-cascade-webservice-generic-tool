@@ -2,12 +2,13 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 
+use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
 trait ContaineredAssetTrait {
 
-    public function createAsset()
+    public function createAsset(): Asset
     {
         $parentClass = $this->getParentClass();
         try {
@@ -27,6 +28,8 @@ trait ContaineredAssetTrait {
             echo "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
             echo "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
         }
+
+        return $this;
     }
 
     public function createParent()

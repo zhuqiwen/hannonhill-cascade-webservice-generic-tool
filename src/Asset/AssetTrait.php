@@ -142,7 +142,7 @@ trait AssetTrait
     }
 
 
-    public function createAsset()
+    public function createAsset(): Asset
     {
         $parentClass = get_parent_class(get_called_class());
         $parentPath = $this->getParentPathForCreate();
@@ -163,6 +163,7 @@ trait AssetTrait
             print_r($this->newAsset);
         }
 
+        return $this;
     }
 
     public function deleteAsset(string $path = "")
@@ -187,7 +188,7 @@ trait AssetTrait
         sleep(3);
     }
 
-    public function updateAsset()
+    public function updateAsset(): Asset
     {
 
         if(!isset($this->newAsset)){
@@ -206,6 +207,8 @@ trait AssetTrait
         $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->newAsset->path;
         $msg .= " has been updated successfully";
         $this->echoForCLI($msg);
+
+        return $this;
     }
 
     /**
