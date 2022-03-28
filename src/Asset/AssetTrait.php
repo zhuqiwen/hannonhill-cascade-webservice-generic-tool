@@ -522,7 +522,7 @@ trait AssetTrait
     public function getRelationships()
     {
         try {
-            return $this->wcms->listSubscribers($this->getOldAssetPath(), $this->assetTypeCreate);
+            return $this->wcms->listSubscribers($this->getOldAssetPath(), $this->assetTypeFetch);
         }catch (\SoapFault $e){
             if(strpos($e->getMessage(), 'looks like we got no XML document') !== false){
                 $msg = 'The WebService seems to be experiencing some issues. Please try again later.';
