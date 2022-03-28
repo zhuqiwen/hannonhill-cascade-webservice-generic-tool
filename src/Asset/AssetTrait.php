@@ -521,7 +521,7 @@ trait AssetTrait
         return $this->getOldAsset()->path;
     }
 
-    protected function getRelationships()
+    public function getRelationships()
     {
         return $this->wcms->listSubscribers($this->getOldAssetPath(), $this->assetTypeCreate);
     }
