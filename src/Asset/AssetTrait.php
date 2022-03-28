@@ -4,12 +4,10 @@ namespace Edu\IU\Framework\GenericUpdater\Asset;
 
 
 
-use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder;
 use Edu\IU\Framework\GenericUpdater\Exception\APIKeyException;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 use Edu\IU\Framework\GenericUpdater\Step;
-use phpDocumentor\Reflection\Types\This;
 
 trait AssetTrait
 {
@@ -523,7 +521,17 @@ trait AssetTrait
 
     public function getRelationships()
     {
-        return $this->wcms->listSubscribers($this->getOldAssetPath(), $this->assetTypeCreate);
+        try {
+            return $this->wcms->listSubscribers($this->getOldAssetPath(), $this->assetTypeCreate);
+        }catch (\SoapFault $e){
+            if(strpos($e->getMessage(), 'looks like we got no XML document') !== false){
+                $msg = 'The WebService seems to be experiencing some issues. Please try again later.';
+                $msg .= ' Detail message: ' . $e->getMessage();
+                throw new \RuntimeException($msg);
+            }
+
+        }
+
     }
 
 
