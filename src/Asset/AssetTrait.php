@@ -516,6 +516,15 @@ trait AssetTrait
         return $sitename;
     }
 
+    protected function getOldAssetPath()
+    {
+        return $this->getOldAsset()->path;
+    }
+
+    protected function getRelationships()
+    {
+        return $this->wcms->listSubscribers($this->getOldAssetPath(), $this->assetTypeCreate);
+    }
 
 
 }
