@@ -14,19 +14,21 @@ trait ContaineredAssetTrait {
         try {
             new $parentClass($this->wcms, $this->newAsset->parentContainerPath);
         }catch (AssetNotFoundException $e){
-            echo $e->getMessage() . ", which will be created now." . PHP_EOL;
+            $msg = $e->getMessage() . ", which will be created now." . PHP_EOL;
+            $this->echoForCLI($msg);
             $this->createParent();
         }catch (\RuntimeException $e){
-            echo $e->getMessage();
+            $this->echoForCLI($e->getMessage());
         }
 
         if(!$this->assetExists($this->getNewAssetPath()))
         {
             unset($this->newAsset->path);
             $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
-            echo "The following Asset has been created:" . PHP_EOL;
-            echo "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
-            echo "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
+            $msg = "The following Asset has been created:" . PHP_EOL;
+            $msg .= "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
+            $msg .= "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
+            $this->echoForCLI($msg);
         }
 
         return $this;
@@ -106,4 +108,11 @@ trait ContaineredAssetTrait {
         }
     }
 
+
+    protected function echoForCLI(string $msg)
+    {
+        if(php_sapi_name() == "cli"){
+            echo $msg . PHP_EOL;
+        }
+    }
 }

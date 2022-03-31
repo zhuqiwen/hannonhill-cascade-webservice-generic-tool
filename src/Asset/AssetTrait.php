@@ -147,18 +147,19 @@ trait AssetTrait
         try {
             new $parentClass($this->wcms, $parentPath);
         }catch (AssetNotFoundException $e){
-            echo $e->getMessage() . ", which will be created now." . PHP_EOL;
+            $msg = $e->getMessage() . ", which will be created now." . PHP_EOL;
+            $this->echoForCLI($msg);
             $this->createParent();
         }catch (\RuntimeException $e){
-            echo $e->getMessage();
+            $this->echoForCLI($e->getMessage());
         }
 
         if(!$this->assetExists($this->getNewAssetPath()))
         {
             unset($this->newAsset->path);
             $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
-            echo "The following asset has been created:" . PHP_EOL;
-            print_r($this->newAsset);
+            $this->echoForCLI("The following asset has been created:" . PHP_EOL);
+            $this->printrForCLI($this->newAsset);
         }
 
         return $this;
@@ -420,6 +421,14 @@ trait AssetTrait
     {
         if(php_sapi_name() == "cli"){
             echo $msg . PHP_EOL;
+        }
+    }
+
+    protected function printrForCLI($var)
+    {
+        if(php_sapi_name() == "cli"){
+            print_r($var);
+            echo PHP_EOL;
         }
     }
 
