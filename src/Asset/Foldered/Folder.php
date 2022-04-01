@@ -31,11 +31,12 @@ class Folder extends Asset {
         if(!$this->assetExists($this->getNewAssetPath()))
         {
             unset($this->newAsset->path);
-            $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+            $result = $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
             $msg = "The following Asset has been created:" . PHP_EOL;
             $msg .= "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
             $msg .= "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
             $this->echoForCLI($msg);
+            $this->newAsset->id = $result->createReturn->createdAssetId;
         }
 
         return $this;
