@@ -157,9 +157,11 @@ trait AssetTrait
         if(!$this->assetExists($this->getNewAssetPath()))
         {
             unset($this->newAsset->path);
-            $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
+            $result = $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
             $this->echoForCLI("The following asset has been created:" . PHP_EOL);
             $this->printrForCLI($this->newAsset);
+
+            $this->newAsset->id = $result->createReturn->createdAssetId;
         }
 
         return $this;
