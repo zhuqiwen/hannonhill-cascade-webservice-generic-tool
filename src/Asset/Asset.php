@@ -18,7 +18,7 @@ class Asset
             $this->setOldAsset($inputs);
         }
 
-        if(gettype($inputs) == "array")
+        if(gettype($inputs) == "array" || is_object($inputs))
         {
             $inputs = json_decode(json_encode($inputs));
             $this->setNewAsset($inputs);
