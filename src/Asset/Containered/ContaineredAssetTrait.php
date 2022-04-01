@@ -32,6 +32,12 @@ trait ContaineredAssetTrait {
 
             $this->newAsset->id = $result->createReturn->createdAssetId;
         }
+        else
+        {
+            //if oldAsset is set, nothing new created
+            //if not, a new asset is created
+            $this->setOldAsset($this->getNewAssetPath());
+        }
 
         return $this;
     }
