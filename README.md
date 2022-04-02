@@ -51,3 +51,10 @@ $block->createAsset();
 ### Format: Velocity
 ### Symlink
 ### Template
+
+
+## How-To
+### When creating new asset, how to check if new asset is created or the asset already exists?
+By checking if $asset->oldAsset attribute is set and $asset->newAsset has a $id key set
+1. if $asset->getOldAsset() returns `null`, or $asset->getNewAsset()->id is set, a new asset has been created by createAsset()
+2. if $asset->getOldAsset() returns asset data or $asset->getNewAsset()->id is Not set, the asset meant to be created has already existed.
