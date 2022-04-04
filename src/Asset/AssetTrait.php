@@ -367,7 +367,7 @@ trait AssetTrait
 
         //test is dependency is in another site, if so, skip the check
         $pathArray = explode(':', $path);
-        if(sizeof($pathArray) === 1){
+        if(sizeof($pathArray) > 1){
             return;
         }
 
