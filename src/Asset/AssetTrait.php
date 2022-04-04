@@ -365,6 +365,12 @@ trait AssetTrait
         $msg .= ", " . $asset->assetTypeDisplay;
         $msg .= " with path: " . $path;
 
+        //test is dependency is in another site, if so, skip the check
+        $pathArray = explode(':', $path);
+        if(sizeof($pathArray) === 1){
+            return;
+        }
+
         if(!$asset->assetExists($path)){
             $msg .= " doesn't seem to exist in Site: " . $this->wcms->getSiteName() . PHP_EOL;
             $msg .= "\tOr the API Key doesn't have proper access to the site: " . $this->wcms->getSiteName() . PHP_EOL;
