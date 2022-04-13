@@ -558,4 +558,12 @@ trait AssetTrait
     }
 
 
+
+    public function listSubscribers()
+    {
+        $path = $this->getOldAssetPath();
+
+        return $this->wcms->listSubscribers($path, $this->assetTypeFetch);
+    }
+
 }
