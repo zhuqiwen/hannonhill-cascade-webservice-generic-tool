@@ -20,6 +20,7 @@ trait AssetTrait
     protected $assetTypeFetch;
     protected $assetTypeCreate;
     protected $containersCreatedOnTheWay = [];
+    protected $skipCheckDependencies;
 
 
     /**
@@ -126,7 +127,10 @@ trait AssetTrait
 
         try {
             $this->checkInputIntegrity();
-            $this->checkDependencies();
+            if(!$this->skipCheckDependencies){
+                $this->checkDependencies();
+            }
+
         }catch (InputIntegrityException $e){
             $msg = $e->getMessage() . PHP_EOL;
             $msg .= "Task aborted." . PHP_EOL;
