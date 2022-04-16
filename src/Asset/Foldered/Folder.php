@@ -113,11 +113,30 @@ class Folder extends Asset {
     public function checkIfSetXHTMLOrDataDefinition()
     {
         $hasXhtml = isset($this->newAsset->xhtml) && !empty(trim($this->newAsset->xhtml));
-        $hasStructuredData = isset($this->newAsset->structuredData->definitionPath) && !empty($this->newAsset->structuredData->definitionPath);
+        $hasDefinitionPath =
+            isset($this->newAsset->structuredData->definitionPath)
+            &&
+            !empty($this->newAsset->structuredData->definitionPath);
+        $hasDefinitionId =
+            isset($this->newAsset->structuredData->definitionId)
+            &&
+            !empty($this->newAsset->structuredData->definitionId);
+        $hasStructuredDataNodes =
+            isset($this->newAsset->structuredData->structuredDataNodes)
+            &&
+            !empty($this->newAsset->structuredData->structuredDataNodes);
 
-        if(!$hasXhtml && !$hasStructuredData){
+        if(
+            !$hasXhtml
+            &&
+            !$hasDefinitionPath
+            &&
+            !$hasDefinitionId
+            &&
+            !$hasStructuredDataNodes
+        ){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
-            $msg .= ", [structuredData][definitionPath] or [xhtml] is required. Please add one by example: ";
+            $msg .= ", one of [structuredData][definitionId], [structuredData][structuredDataNodes], [structuredData][definitionPath], or [xhtml] is required. Please add one by example: ";
             throw new InputIntegrityException($msg);
         }
     }
