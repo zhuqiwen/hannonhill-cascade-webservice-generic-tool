@@ -75,7 +75,7 @@ trait AssetTrait
     {
         if(!isset($this->newAsset))
         {
-            throw new RuntimeException("newAsset has not been set");
+            throw new \RuntimeException("newAsset has not been set");
         }
 
         return clone $this->newAsset;
