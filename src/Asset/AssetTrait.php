@@ -177,8 +177,13 @@ trait AssetTrait
         return $this;
     }
 
-    public function deleteAsset(string $path = "")
+    /**
+     * @param string $path
+     * @return string $siteId
+     */
+    public function deleteAsset(string $path = ""): string
     {
+        $siteId = $this->oldAsset->siteId;
         if(!isset($this->oldAsset->path) && empty(trim($path))){
             $msg = "Path to the asset of " . $this->assetTypeDisplay . " must be provided either as #1 paremeter for deleteAsset() ";
             $msg .= " or as #2 parameter for the object constructor.";
@@ -195,8 +200,11 @@ trait AssetTrait
             $this->echoForCLI($msg);
         }
 
-        // pause for 3 seconds for the WCMS database to update status after each deletion in a batch
-        sleep(3);
+        // pause for the WCMS database to update status after each deletion in a batch
+        sleep(1);
+
+        //return site id
+        return $siteId;
     }
 
     public function updateAsset(): Asset
@@ -496,6 +504,9 @@ trait AssetTrait
             case 'create':
                 $steps = $this->getCreateSteps();
                 break;
+            case 'delete':
+                $steps = $this->getDeleteSteps();
+                break;
             default:
                 if(empty(trim($action))){
                    $msg = '"action" as 2nd parameter of Action constructor should not be empty string. One of valid values: "create", and "update" should be used.';
@@ -525,6 +536,17 @@ trait AssetTrait
 
         $steps = [
             new Step($this, 'createAsset')
+        ];
+
+        return $steps;
+    }
+
+    protected function getDeleteSteps()
+    {
+        $this->echoForCLI("collecting delete steps for Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath());
+
+        $steps = [
+            new Step($this, 'deleteAsset')
         ];
 
         return $steps;
