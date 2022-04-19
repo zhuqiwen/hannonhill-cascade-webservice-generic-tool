@@ -223,7 +223,7 @@ trait AssetTrait
         }
 
         $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
-        $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->newAsset->path;
+        $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
         $msg .= " has been updated successfully";
         $this->echoForCLI($msg);
 
