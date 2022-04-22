@@ -172,6 +172,7 @@ trait AssetTrait
             //if oldAsset is set, nothing new created
             //if not, a new asset is created
             $this->setOldAsset($this->getNewAssetPath());
+            $this->setNewAsset($this->getOldAsset());
         }
 
         return $this;
