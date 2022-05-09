@@ -29,15 +29,14 @@ trait ContaineredAssetTrait {
             $msg .= "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
             $msg .= "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
             $this->echoForCLI($msg);
+            $this->printrForCLI($this->newAsset);
 
             $this->newAsset->id = $result->createReturn->createdAssetId;
         }
-        else
-        {
-            //if oldAsset is set, nothing new created
-            //if not, a new asset is created
-            $this->setOldAsset($this->getNewAssetPath());
-        }
+        $this->setOldAsset($this->getNewAssetPath());
+        $this->newAsset = $this->getOldAsset();
+
+
 
         return $this;
     }
