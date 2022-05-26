@@ -8,11 +8,13 @@ class Action
     public $steps = [];
     public $appliedSteps = [];
     public $mode;
+    public $action;
 
 
     public function __construct(array $assets, string $action, $mode = null)
     {
         $this->mode = $mode;
+        $this->action = $action;
         try{
             foreach ($assets as $asset) {
                 $this->steps = array_merge($this->steps, $asset->getSteps($action));
@@ -42,7 +44,8 @@ class Action
                 $result = $step->apply();
                 array_unshift($this->appliedSteps, $step);
                 if($this->mode == 'display progress'){
-                    echo $result->getNewAsset()->path . " created" . PHP_EOL;
+                    echo $this->action . ': ' . $result->getNewAsset()->path . " successfully." . PHP_EOL;
+                    echo '<br/>';
                     echo str_repeat(' ', 1024*64);
                     flush();
                 }
