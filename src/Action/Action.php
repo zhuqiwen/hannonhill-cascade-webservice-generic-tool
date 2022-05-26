@@ -44,7 +44,7 @@ class Action
                 $result = $step->apply();
                 array_unshift($this->appliedSteps, $step);
                 if($this->mode == 'display progress'){
-                    echo $this->action . ': ' . $result->getNewAsset()->path . " successfully." . PHP_EOL;
+                    echo $result->getSiteName() . ': ' . $this->action . ': ' . $result->getNewAsset()->path .  " successfully." . PHP_EOL;
                     echo '<br/>';
                     echo str_repeat(' ', 1024*64);
                     flush();
