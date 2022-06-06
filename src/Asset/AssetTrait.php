@@ -244,6 +244,8 @@ trait AssetTrait
         $msg .= " has been restored successfully";
         $this->echoForCLI($msg);
 
+        return $msg;
+
     }
 
     public function rollbackCreateAsset()
@@ -264,6 +266,8 @@ trait AssetTrait
             $topContainer = new $containerClass($this->wcms, $this->getTopAncesterPath());
             $topContainer->deleteAsset();
         }
+
+        return $msg;
     }
 
 
