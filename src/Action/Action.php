@@ -57,7 +57,8 @@ class Action
         }
         catch (\RuntimeException $e)
         {
-            return $this->rollback($e->getMessage());
+            $rollbackResult = $this->rollback($e->getMessage());
+            throw new \RuntimeException($rollbackResult['message']);
         }
 
     }

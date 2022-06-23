@@ -219,10 +219,16 @@ trait AssetTrait
             throw new \RuntimeException($msg);
         }
 
-        $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
-        $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
-        $msg .= " has been updated successfully";
-        $this->echoForCLI($msg);
+        try {
+            $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
+            $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
+            $msg .= " has been updated successfully";
+            $this->echoForCLI($msg);
+        }catch (\Exception $e){
+            $msg = $e->getMessage() . PHP_EOL;
+            $msg .= "Asset Path: " . $this->getNewAssetPath();
+            throw new \RuntimeException($msg);
+        }
 
         return $this;
     }
