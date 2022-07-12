@@ -176,9 +176,9 @@ trait AssetTrait
 
     /**
      * @param string $path
-     * @return string $siteId
+     * @return Asset
      */
-    public function deleteAsset(string $path = ""): string
+    public function deleteAsset(string $path = ""): Asset
     {
         $siteId = $this->oldAsset->siteId;
         if(!isset($this->oldAsset->path) && empty(trim($path))){
@@ -200,8 +200,7 @@ trait AssetTrait
         // pause for the WCMS database to update status after each deletion in a batch
         sleep(1);
 
-        //return site id
-        return $siteId;
+        return $this;
     }
 
     public function updateAsset(): Asset
