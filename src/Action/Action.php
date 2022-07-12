@@ -44,10 +44,11 @@ class Action
                 $result = $step->apply();
                 array_unshift($this->appliedSteps, $step);
                 if($this->mode == 'display progress'){
-                    echo $result->getSiteName() . ': ' . $this->action . ': ' . $result->getNewAsset()->path .  " successfully." . PHP_EOL;
-                    echo '<br/>';
-                    echo str_repeat(' ', 1024*64);
+                    echo "event: in-progress\n";
+                    echo "data: " . $result->getSiteName() . ': ' . $this->action . ': ' . $result->getOldAsset()->path .  " successfully.\n\n";
+                    ob_end_flush();
                     flush();
+                    usleep(500000);
                 }
 
                 $results[] = $result;
@@ -57,8 +58,7 @@ class Action
         }
         catch (\RuntimeException $e)
         {
-            $rollbackResult = $this->rollback($e->getMessage());
-            throw new \RuntimeException($rollbackResult['message']);
+            return $this->rollback($e->getMessage());
         }
 
     }
