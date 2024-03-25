@@ -15,7 +15,8 @@ class Page extends Folder {
     {
         parent::checkDependencies();
         $this->checkExistenceContentType($this->newAsset->contentTypePath);
-        $this->checkExistenceDataDefinition($this->newAsset->structuredData->definitionPath);
+        //no need to check if dd exists, dd path is not required for a page
+//        $this->checkExistenceDataDefinition($this->newAsset->structuredData->definitionPath);
     }
 
     public function checkExistenceContentType($path)
