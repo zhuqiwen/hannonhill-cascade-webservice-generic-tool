@@ -41,7 +41,7 @@ class Folder extends Asset {
             }
             $this->newAsset->id = $result->createReturn->createdAssetId;
         }else{
-            $this->echoForCLI('The asset: ' . $this->newAsset->path . '(' . $this->assetTypeDisplay. ') already exists');
+            $this->echoForCLI('The asset: ' . $this->getNewAssetPath() . '(' . $this->assetTypeDisplay. ') already exists');
         }
         $this->setOldAsset($this->getNewAssetPath());
         $this->newAsset = $this->getOldAsset();
