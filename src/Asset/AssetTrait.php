@@ -21,6 +21,7 @@ trait AssetTrait
     protected $assetTypeCreate;
     protected $containersCreatedOnTheWay = [];
     protected $skipCheckDependencies;
+    protected bool $printAssetDetails = false;
 
 
     /**
@@ -163,9 +164,14 @@ trait AssetTrait
             unset($this->newAsset->path);
             $result = $this->wcms->createAsset($this->assetTypeCreate, $this->newAsset);
             $this->echoForCLI("The following asset has been created:" . PHP_EOL);
-            $this->printrForCLI($this->newAsset);
+            if ($this->printAssetDetails){
+                $this->printrForCLI($this->newAsset);
+            }
+
 
             $this->newAsset->id = $result->createReturn->createdAssetId;
+        }else{
+            $this->echoForCLI('The asset: ' . $this->newAsset->path . '(' . $this->assetTypeDisplay. ') already exists');
         }
         $this->setOldAsset($this->getNewAssetPath());
         $this->newAsset = $this->getOldAsset();

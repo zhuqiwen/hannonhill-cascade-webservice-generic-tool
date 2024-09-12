@@ -9,9 +9,10 @@ class Asset
     use AssetTrait;
 
 
-    public function __construct(WCMSClient $wcms, $inputs = null, bool $skipCheckDependencies = false)
+    public function __construct(WCMSClient $wcms, $inputs = null, bool $skipCheckDependencies = false, bool $printAssetDetails = false)
     {
         $this->skipCheckDependencies = $skipCheckDependencies;
+        $this->printAssetDetails = $printAssetDetails;
         $this->wcms = $wcms;
         $this->siteName = $wcms->getSiteName();
 
