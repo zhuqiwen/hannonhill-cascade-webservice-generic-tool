@@ -36,9 +36,12 @@ class Folder extends Asset {
             $msg .= "\tAsset Type: " . $this->assetTypeDisplay . PHP_EOL;
             $msg .= "\tAsset Path: " . $this->getNewAssetPath() . PHP_EOL;
             $this->echoForCLI($msg);
-            $this->printrForCLI($this->newAsset);
-
+            if ($this->printAssetDetails){
+                $this->printrForCLI($this->newAsset);
+            }
             $this->newAsset->id = $result->createReturn->createdAssetId;
+        }else{
+            $this->echoForCLI('The asset: ' . $this->newAsset->path . '(' . $this->assetTypeDisplay. ') already exists');
         }
         $this->setOldAsset($this->getNewAssetPath());
         $this->newAsset = $this->getOldAsset();
