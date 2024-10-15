@@ -4,6 +4,7 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\DataDefinition;
+use phpDocumentor\Reflection\Types\This;
 
 class Page extends Folder {
     protected  $assetTypeDisplay = "Page";
@@ -38,6 +39,17 @@ class Page extends Folder {
         $this->checkIfSetXHTMLOrDataDefinition();
 
 
+    }
+
+    public function getOldStructuredDataNode():array
+    {
+        $result = $this->getOldAsset()->structuredData->structuredDataNodes->structuredDataNode;
+        // not array, and is a stdClass, meaning there is either only one node, or the content type is using a wysiwyg editor
+        if (!is_array($result) && $result instanceof \stdClass){
+            $result = [$result];
+        }
+
+        return $result;
     }
 
 

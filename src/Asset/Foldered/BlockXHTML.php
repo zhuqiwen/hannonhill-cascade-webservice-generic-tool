@@ -30,4 +30,15 @@ class BlockXHTML extends Block {
         $this->checkIfSetXHTMLOrDataDefinition();
     }
 
+
+    public function getOldStructuredDataNode():array
+    {
+        $result = $this->getOldAsset()->structuredData->structuredDataNodes->structuredDataNode;
+        // not array, and is a stdClass, meaning there is either only one node, or the content type is using a wysiwyg editor
+        if (!is_array($result) && $result instanceof \stdClass){
+            $result = [$result];
+        }
+
+        return $result;
+    }
 }
