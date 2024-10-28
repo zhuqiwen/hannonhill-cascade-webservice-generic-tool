@@ -2,26 +2,27 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Utilities;
 
+use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentTypeContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSetContainer;
+use Edu\IU\Framework\GenericUpdater\Asset\Containered\PageConfigurationSetContainer;
 use Edu\IU\Wcms\WebService\WCMSClient;
 
-class MetadataSetUtilities implements UtilitiesInterface {
+class ContentTypeUtilities{
 
     use UtilitiesTraits;
 
     public function __construct(WCMSClient $wcms)
     {
         $this->wcms = $wcms;
-        $this->assetTypeFetch = ASSET_METADATA_SET_FETCH;
-        $this->containerTypeFetch = ASSET_CONTAINER_METADATA_SET_FETCH;
+        $this->assetTypeFetch = ASSET_CONTENT_TYPE_FETCH;
+        $this->containerTypeFetch = ASSET_CONTAINER_CONTENT_TYPE_FETCH;
     }
 
-
-    public function getAllInContainer(string $containerOrFolderPath):array
+    public function getAllInContainer(string $containerOrFolderPath): array
     {
         $result = [];
 
-        $container = new MetadataSetContainer($this->wcms, $containerOrFolderPath);
+        $container = new ContentTypeContainer($this->wcms, $containerOrFolderPath);
 
         $children = $this->convertToArrayWhenOnly1Child($container);
         foreach ($children as $child) {
@@ -34,6 +35,4 @@ class MetadataSetUtilities implements UtilitiesInterface {
 
         return $result;
     }
-
-
 }

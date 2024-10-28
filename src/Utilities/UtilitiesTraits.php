@@ -8,6 +8,9 @@ use Edu\IU\Wcms\WebService\WCMSClient;
 trait UtilitiesTraits{
     public WCMSClient $wcms;
 
+    protected string $assetTypeFetch;
+    protected string $containerTypeFetch;
+
     public function convertToArrayWhenOnly1Child(Asset $containerOrFolder):array
     {
 
@@ -20,6 +23,18 @@ trait UtilitiesTraits{
                 [$childrenProperty->child])
             :
             [];
+    }
+
+    public function getAllInSite(string $siteName = '', string $apiKey = ''): array
+    {
+        if (!empty($siteName)){
+            $this->wcms->setSiteName($siteName);
+        }
+        if (!empty($apiKey)){
+            $this->wcms->setAuthByKey($apiKey);
+        }
+
+        return $this->getAllInContainer('/');
     }
 
 }
