@@ -15,6 +15,8 @@ class PageConfigurationSetUtilities implements UtilitiesInterface {
         $this->wcms = $wcms;
         $this->assetTypeFetch = ASSET_PAGE_CONFIGURATION_SET_FETCH;
         $this->containerTypeFetch = ASSET_CONTAINER_PAGE_CONFIGURATION_SET_FETCH;
+
+        $this->assetClassName = 'Edu\IU\Framework\GenericUpdater\Asset\Foldered\Page';
     }
 
     public function getAllInContainer(string $containerOrFolderPath): array

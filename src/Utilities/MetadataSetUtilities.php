@@ -14,6 +14,9 @@ class MetadataSetUtilities implements UtilitiesInterface {
         $this->wcms = $wcms;
         $this->assetTypeFetch = ASSET_METADATA_SET_FETCH;
         $this->containerTypeFetch = ASSET_CONTAINER_METADATA_SET_FETCH;
+
+        $this->assetClassName = 'Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSet';
+
     }
 
 

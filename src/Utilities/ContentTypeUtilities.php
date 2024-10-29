@@ -7,7 +7,7 @@ use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSetContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\PageConfigurationSetContainer;
 use Edu\IU\Wcms\WebService\WCMSClient;
 
-class ContentTypeUtilities{
+class ContentTypeUtilities implements UtilitiesInterface {
 
     use UtilitiesTraits;
 
@@ -16,6 +16,8 @@ class ContentTypeUtilities{
         $this->wcms = $wcms;
         $this->assetTypeFetch = ASSET_CONTENT_TYPE_FETCH;
         $this->containerTypeFetch = ASSET_CONTAINER_CONTENT_TYPE_FETCH;
+
+        $this->assetClassName = 'Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType';
     }
 
     public function getAllInContainer(string $containerOrFolderPath): array
