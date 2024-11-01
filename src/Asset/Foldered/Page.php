@@ -2,9 +2,9 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Asset\Foldered;
 
+use Edu\IU\Framework\GenericUpdater\Asset\Asset;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\DataDefinition;
-use phpDocumentor\Reflection\Types\This;
 
 class Page extends Folder {
     protected  $assetTypeDisplay = "Page";
@@ -50,6 +50,32 @@ class Page extends Folder {
         }
 
         return $result;
+    }
+
+    public function generateBasicAssetData(string $pagePath, string $contentTypePath):\stdClass
+    {
+        $pagePath = trim($pagePath, DIRECTORY_SEPARATOR);
+        $pageName = basename($pagePath);
+        $parentFolderPath = dirname($pagePath) == '.' ? DIRECTORY_SEPARATOR : dirname($pagePath);
+
+
+        return (object)[
+            'name' => $pageName,
+            'parentFolderPath' => $parentFolderPath,
+            'contentTypePath' => $contentTypePath,
+            'structuredData' => (object) [
+                'structuredDataNodes' => (object) [
+                    'structuredDataNode' => null
+                ]
+            ]
+        ];
+    }
+
+    public function createEmptyPage(string $pagePath, string $contentTypePath): Asset
+    {
+        $this->setNewAsset($this->generateBasicAssetData($pagePath, $contentTypePath));
+
+        return $this->createAsset();
     }
 
 
