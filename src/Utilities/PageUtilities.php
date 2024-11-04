@@ -99,22 +99,12 @@ class PageUtilities{
      * @param array $structuredDataNodes
      * @return \stdClass
      */
+    //TODO: add 4th argument for metadataset
     public function constructAssetData(string $pagePath, string $contentTypePath, array $structuredDataNodes = []):\stdClass
     {
         $pagePath = trim($pagePath, DIRECTORY_SEPARATOR);
         $pageName = basename($pagePath);
         $parentFolderPath = dirname($pagePath) == '.' ? DIRECTORY_SEPARATOR : dirname($pagePath);
-
-        $structuredDataNodeArray = [];
-        foreach ($structuredDataNodes as $structuredDataNode) {
-            if (is_object($structuredDataNode)){
-                if (method_exists($structuredDataNode, 'toArray')){
-                    $structuredDataNodeArray[] = $structuredDataNode->toArray();
-                }else{
-                    throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of array, or array of objects that implement toArray() method ');
-                }
-            }
-        }
 
         return (object)[
             'name' => $pageName,
@@ -122,10 +112,29 @@ class PageUtilities{
             'contentTypePath' => $contentTypePath,
             'structuredData' => (object) [
                 'structuredDataNodes' => (object) [
-                    'structuredDataNode' => $structuredDataNodeArray
+                    'structuredDataNode' => $this->normalizeStructuredDataNodesArray($structuredDataNodes)
                 ]
             ]
         ];
+    }
+
+
+    /**
+     * @param array $structuredDataNodes
+     * @return array
+     */
+    private function normalizeStructuredDataNodesArray(array $structuredDataNodes):array
+    {
+        $structuredDataNodeArray = [];
+        foreach ($structuredDataNodes as $structuredDataNode) {
+            if (is_array($structuredDataNode) || (is_object($structuredDataNode) && method_exists($structuredDataNode, 'toArray'))){
+                $structuredDataNodeArray[] = $structuredDataNode->toArray();
+            }else{
+                throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of array, or array of objects that implement toArray() method ');
+            }
+        }
+
+        return $structuredDataNodeArray;
     }
 
 }
