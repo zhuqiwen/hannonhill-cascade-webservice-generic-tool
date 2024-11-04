@@ -89,4 +89,43 @@ class PageUtilities{
 
         return $result;
     }
+
+    /**
+     * the 3rd argument is expected to be array of:
+     * 1. arrays
+     * 2. OR objects that implement toArray() method
+     * @param string $pagePath
+     * @param string $contentTypePath
+     * @param array $structuredDataNodes
+     * @return \stdClass
+     */
+    public function constructAssetData(string $pagePath, string $contentTypePath, array $structuredDataNodes = []):\stdClass
+    {
+        $pagePath = trim($pagePath, DIRECTORY_SEPARATOR);
+        $pageName = basename($pagePath);
+        $parentFolderPath = dirname($pagePath) == '.' ? DIRECTORY_SEPARATOR : dirname($pagePath);
+
+        $structuredDataNodeArray = [];
+        foreach ($structuredDataNodes as $structuredDataNode) {
+            if (is_object($structuredDataNode)){
+                if (method_exists($structuredDataNode, 'toArray')){
+                    $structuredDataNodeArray[] = $structuredDataNode->toArray();
+                }else{
+                    throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of array, or array of objects that implement toArray() method ')
+                }
+            }
+        }
+
+        return (object)[
+            'name' => $pageName,
+            'parentFolderPath' => $parentFolderPath,
+            'contentTypePath' => $contentTypePath,
+            'structuredData' => (object) [
+                'structuredDataNodes' => (object) [
+                    'structuredDataNode' => $structuredDataNodeArray
+                ]
+            ]
+        ];
+    }
+
 }
