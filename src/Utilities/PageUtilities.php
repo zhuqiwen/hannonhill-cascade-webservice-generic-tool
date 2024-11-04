@@ -111,7 +111,7 @@ class PageUtilities{
                 if (method_exists($structuredDataNode, 'toArray')){
                     $structuredDataNodeArray[] = $structuredDataNode->toArray();
                 }else{
-                    throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of array, or array of objects that implement toArray() method ')
+                    throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of array, or array of objects that implement toArray() method ');
                 }
             }
         }
