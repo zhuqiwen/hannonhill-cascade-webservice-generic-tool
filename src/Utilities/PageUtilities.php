@@ -127,7 +127,9 @@ class PageUtilities{
     {
         $structuredDataNodeArray = [];
         foreach ($structuredDataNodes as $structuredDataNode) {
-            if (is_array($structuredDataNode) || (is_object($structuredDataNode) && method_exists($structuredDataNode, 'toArray'))){
+            if (is_array($structuredDataNode)){
+                $structuredDataNodeArray[] = $structuredDataNode;
+            }elseif(is_object($structuredDataNode) && method_exists($structuredDataNode, 'toArray')){
                 $structuredDataNodeArray[] = $structuredDataNode->toArray();
             }else{
                 throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of array, or array of objects that implement toArray() method ');
