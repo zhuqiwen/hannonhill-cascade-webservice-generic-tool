@@ -8,6 +8,7 @@ use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSet;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSetContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\PageConfigurationSetContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder;
+use Edu\IU\Framework\GenericUpdater\Interfaces\StructuredDataNodeInterface;
 use Edu\IU\Wcms\WebService\WCMSClient;
 
 class PageUtilities{
@@ -120,19 +121,17 @@ class PageUtilities{
 
 
     /**
-     * @param array $structuredDataNodes
+     * @param array $structuredDataNodes, array of objects that implement StructuredDataNodeInterface
      * @return array
      */
     private function normalizeStructuredDataNodesArray(array $structuredDataNodes):array
     {
         $structuredDataNodeArray = [];
         foreach ($structuredDataNodes as $structuredDataNode) {
-            if (is_array($structuredDataNode)){
-                $structuredDataNodeArray[] = $structuredDataNode;
-            }elseif(is_object($structuredDataNode) && method_exists($structuredDataNode, 'toArray')){
+            if ($structuredDataNode instanceof StructuredDataNodeInterface){
                 $structuredDataNodeArray[] = $structuredDataNode->toArray();
             }else{
-                throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of array, or array of objects that implement toArray() method ');
+                throw new \RuntimeException('the 3rd argument, \$structuredDataNodes must be either array of objects that implement Edu\IU\Framework\GenericUpdater\Interfaces');
             }
         }
 
