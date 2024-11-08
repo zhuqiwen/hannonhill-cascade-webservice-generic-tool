@@ -7,9 +7,11 @@ use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSet;
 use Edu\IU\Framework\GenericUpdater\Exception\AssetNotFoundException;
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
 
-class Folder extends Asset {
+class Folder extends Asset implements MetadataInterface, TagsInterface{
 
     use FolderedAssetTrait;
+    use MetadataTraits;
+    use TagsTraits;
 
     protected $assetTypeDisplay = "Folder";
     protected $assetTypeFetch = ASSET_FOLDER_FETCH;
