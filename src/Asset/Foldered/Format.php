@@ -23,8 +23,16 @@ class Format extends Folder{
         getOldMetadataTitle as private;
         getOldMetadataDynamicFieldByName as private;
         getNewMetadataDynamicFieldByName as private;
+        getOldMetadataDynamicFields as private;
+        getNewMetadataDynamicFields as private;
         setNewMetadataDynamicField as private;
         convertDynamicFields2Array as private;
         convertArray2DynamicFields as private;
+    }
+    use TagsTraits{
+        getOldTags as private;
+        getNewTags as private;
+        setNewTags as private;
+        addNewTag as private;
     }
 }

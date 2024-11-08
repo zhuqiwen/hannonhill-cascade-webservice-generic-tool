@@ -86,15 +86,19 @@ trait MetadataTraits{
     public function getOldMetadataDynamicFieldByName(string $dynamicFieldName):string | array
     {
         //convert dynamicFields to array
-        $dynamicFields = $this->getOldAsset()->metadata->dynamicFields;
-        if (is_null($dynamicFields)){
-            $dynamicFields = new \stdClass();
-        }
+        $dynamicFields = $this->getOldAsset()->metadata->dynamicFields ?? new \stdClass();
         $convertedDynamicFieldsArray = $this->convertDynamicFields2Array($dynamicFields);
         //query the data
 
         //return it
         return $convertedDynamicFieldsArray[$dynamicFieldName] ?? throw new \OutOfBoundsException($dynamicFieldName . ' does not exist in metadata dynamic fields');
+    }
+
+    public function getOldMetadataDynamicFields():array
+    {
+        $dynamicFields = $this->getOldAsset()->metadata->dynamicFields ?? new \stdClass();
+
+        return $this->convertDynamicFields2Array($dynamicFields);
     }
     public function getNewMetadataDynamicFieldByName(string $dynamicFieldName):string | array
     {
@@ -110,6 +114,13 @@ trait MetadataTraits{
         return $convertedDynamicFieldsArray[$dynamicFieldName] ?? throw new \OutOfBoundsException($dynamicFieldName . ' does not exist in metadata dynamic fields');
     }
 
+    public function getNewMetadataDynamicFields():array
+    {
+        $dynamicFields = $this->getNewAsset()->metadata->dynamicFields ?? new \stdClass();
+
+        return $this->convertDynamicFields2Array($dynamicFields);
+    }
+
     public function setNewMetadataDynamicField(string $dynamicFieldName, string | array $valueStringOrValuesArray):void
     {
         //convert new metadata to array
@@ -119,7 +130,7 @@ trait MetadataTraits{
         $convertedMetadataArray[$dynamicFieldName] = $valueStringOrValuesArray;
         //convert the array back to new metadata
         $newDynamicFields = $this->convertArray2DynamicFields($convertedMetadataArray);
-        $this->getNewAsset()->metadata->dynamicFields = $newDynamicFields;
+        $this->newAsset->metadata->dynamicFields = $newDynamicFields;
 
     }
 
