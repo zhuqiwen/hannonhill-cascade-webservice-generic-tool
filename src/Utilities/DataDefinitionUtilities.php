@@ -17,8 +17,16 @@ class DataDefinitionUtilities{
 
     }
 
-    public function getAllPathsFromDataDefinition(string $dataDefinitionPath):array
+    public function getAllPathsFromDataDefinition(string $dataDefinitionPath, string $siteName = '', string $apiKey = ""):array
     {
+        if (!empty($siteName)){
+            $this->setSiteName($siteName);
+        }
+
+        if (!empty($apiKey)){
+            $this->setApiKey($apiKey);
+        }
+
         $dataDefinition = new DataDefinition($this->wcms, $dataDefinitionPath);
         $xmlString = $dataDefinition->getXml();
         return $this->getAllPaths($xmlString);
