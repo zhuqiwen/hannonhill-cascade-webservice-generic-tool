@@ -4,6 +4,8 @@ namespace Edu\IU\Framework\GenericUpdater\Asset\Containered;
 
 
 use Edu\IU\Framework\GenericUpdater\Exception\InputIntegrityException;
+use Edu\IU\Wcms\WebService\WCMSClient;
+use phpDocumentor\Reflection\Types\This;
 
 class DataDefinition extends DataDefinitionContainer {
     protected $assetTypeDisplay = "Data Definition";
@@ -73,6 +75,56 @@ class DataDefinition extends DataDefinitionContainer {
         }
 
     }
+
+    /**
+     * use $replaceSharedFieldsWithTheirXml to control if the xml returned contains <shared-field/>
+     * @param bool $replaceSharedFieldsWithTheirXml
+     * @return string
+     */
+    public function getXml(bool $replaceSharedFieldsWithTheirXml = true):string
+    {
+        return $replaceSharedFieldsWithTheirXml ? $this->getXmlWhereSharedFieldsConverted() : $this->getOriginalXmlString();
+    }
+
+
+    /**
+     * get data definition's xml string where shared-field nodes are NOT converted
+     * @return string
+     */
+    public function getOriginalXmlString():string
+    {
+        return $this->getOldAsset()->xml;
+    }
+
+    /**
+     * get data definition's xml string, where all shared-field nodes are fetched and replaced with their xml
+     * @return string
+     */
+    public function getXmlWhereSharedFieldsConverted():string
+    {
+        $ddXml = $this->getOldAsset()->xml;
+        $ddXmlDom = new \DOMDocument();
+        $ddXmlDom->loadXML($ddXml);
+
+        $sharedFieldNodeList = $ddXmlDom->getElementsByTagName('shared-field');
+
+        //iterator_to_array() is required here
+        // because we are going to make changes to the dom document by replacing shared-field elements with their actual xml
+        foreach (iterator_to_array($sharedFieldNodeList) as $sharedFieldNode) {
+
+            $sfPath = $sharedFieldNode->getAttribute('path');
+            $sf = new SharedField($this->wcms, $sfPath);
+            $sfXml = $sf->getOldAsset()->xml;
+            $sfXmlDom = new \DOMDocument();
+            $sfXmlDom->loadXML($sfXml);
+            $sfXmlNode = $ddXmlDom->importNode($sfXmlDom->documentElement->firstElementChild, true);
+            $sharedFieldNode->replaceWith($sfXmlNode);
+
+        }
+
+        return $ddXmlDom->saveXML();
+    }
+
 
 
 }

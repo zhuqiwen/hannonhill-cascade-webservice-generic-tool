@@ -13,7 +13,8 @@
     "iu-vpcm-dc/wcms-webservice": "dev-main",
     "phpunit/phpunit": "^9.5.18",
     "ext-libxml": "*",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "ext-dom": "*"
   },
   "autoload": {
     "psr-4": {
