@@ -54,15 +54,15 @@ trait UtilitiesTraits{
         }
     }
 
-    public function generatePathMap(array $oldPathArray, array $newPathArray, string $preProcessFunctionNameOldPaths = '', string $preProcessFunctionNameNewPaths = ''):array
+    public function generatePathMap(array $oldPathArray, array $newPathArray, array $preProcessMethodForOldPaths = [], array $preProcessMethodForNewPaths = []):array
     {
         $map = [];
         foreach ($oldPathArray as $oldPath) {
             $similarity = 0;
             $map[$oldPath] = null;
-            $processedOldPath = empty($preProcessFunctionNameOldPaths) ? $oldPath : call_user_func($preProcessFunctionNameOldPaths, $oldPath);
+            $processedOldPath = empty($preProcessMethodForOldPaths) ? $oldPath : call_user_func($preProcessMethodForOldPaths, $oldPath);
             foreach ($newPathArray as $newPath) {
-                $processedNewPath = empty($preProcessFunctionNameNewPaths) ? $newPath : call_user_func($preProcessFunctionNameNewPaths, $newPath);
+                $processedNewPath = empty($preProcessMethodForNewPaths) ? $newPath : call_user_func($preProcessMethodForNewPaths, $newPath);
                 $tmpSimilarity = pathComponentComparison($processedOldPath, $processedNewPath);
                 if ($tmpSimilarity > $similarity){
                     $map[$oldPath] = $newPath;
