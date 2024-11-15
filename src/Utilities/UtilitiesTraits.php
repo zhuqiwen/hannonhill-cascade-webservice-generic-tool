@@ -63,7 +63,7 @@ trait UtilitiesTraits{
             $processedOldPath = empty($preProcessMethodForOldPaths) ? $oldPath : call_user_func($preProcessMethodForOldPaths, $oldPath);
             foreach ($newPathArray as $newPath) {
                 $processedNewPath = empty($preProcessMethodForNewPaths) ? $newPath : call_user_func($preProcessMethodForNewPaths, $newPath);
-                $tmpSimilarity = pathComponentComparison($processedOldPath, $processedNewPath);
+                $tmpSimilarity = $this->pathComponentComparison($processedOldPath, $processedNewPath);
                 if ($tmpSimilarity > $similarity){
                     $map[$oldPath] = $newPath;
                     $similarity = $tmpSimilarity;
