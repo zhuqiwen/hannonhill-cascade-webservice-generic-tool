@@ -54,4 +54,37 @@ trait UtilitiesTraits{
         }
     }
 
+    public function generatePathMap(array $oldPathArray, array $newPathArray, string $preProcessFunctionNameOldPaths = '', string $preProcessFunctionNameNewPaths = ''):array
+    {
+        $map = [];
+        foreach ($oldPathArray as $oldPath) {
+            $similarity = 0;
+            $map[$oldPath] = null;
+            $processedOldPath = empty($preProcessFunctionNameOldPaths) ? $oldPath : call_user_func($preProcessFunctionNameOldPaths, $oldPath);
+            foreach ($newPathArray as $newPath) {
+                $processedNewPath = empty($preProcessFunctionNameNewPaths) ? $newPath : call_user_func($preProcessFunctionNameNewPaths, $newPath);
+                $tmpSimilarity = pathComponentComparison($processedOldPath, $processedNewPath);
+                if ($tmpSimilarity > $similarity){
+                    $map[$oldPath] = $newPath;
+                    $similarity = $tmpSimilarity;
+                }
+            }
+
+        }
+
+        return $map;
+    }
+
+    public function pathComponentComparison(string $pathA, string $pathB):float
+    {
+        $componentsA = explode(DIRECTORY_SEPARATOR, $pathA);
+        $componentsB = explode(DIRECTORY_SEPARATOR, $pathB);
+
+        $common = array_intersect_assoc($componentsA, $componentsB);
+
+        return count($common) / max(count($componentsA), count($componentsB)) * 100;
+
+
+    }
+
 }
