@@ -63,5 +63,42 @@ class DataDefinitionUtilities{
 
     }
 
+    public function generatePathMap(array $oldPathArray, array $newPathArray, string | array $preProcessMethodForOldPaths = '', string | array $preProcessMethodForNewPaths = ''):array
+    {
+        $map = [];
+        foreach ($oldPathArray as $oldPath) {
+            $similarity = 0;
+            $map[$oldPath] = null;
+            $processedOldPath = empty($preProcessMethodForOldPaths) ? $oldPath : call_user_func($preProcessMethodForOldPaths, $oldPath);
+            //allow client application/codebase to skip some path/item in data definition
+            if (empty($processedOldPath)){
+                continue;
+            }
+            foreach ($newPathArray as $newPath) {
+                $processedNewPath = empty($preProcessMethodForNewPaths) ? $newPath : call_user_func($preProcessMethodForNewPaths, $newPath);
+                $tmpSimilarity = $this->pathComponentComparison($processedOldPath, $processedNewPath);
+                if ($tmpSimilarity > $similarity){
+                    $map[$oldPath] = $newPath;
+                    $similarity = $tmpSimilarity;
+                }
+            }
+
+        }
+
+        return $map;
+    }
+
+    public function pathComponentComparison(string $pathA, string $pathB):float
+    {
+        $componentsA = explode(DIRECTORY_SEPARATOR, $pathA);
+        $componentsB = explode(DIRECTORY_SEPARATOR, $pathB);
+
+        $common = array_intersect_assoc($componentsA, $componentsB);
+
+        return count($common) / max(count($componentsA), count($componentsB)) * 100;
+
+
+    }
+
 
 }
