@@ -101,7 +101,7 @@ class PageUtilities{
      * @return \stdClass
      */
     //TODO: add 4th argument for metadataset
-    public function constructAssetData(string $pagePath, string $contentTypePath, array $structuredDataNodes = []):\stdClass
+    public function constructAssetData(string $pagePath, string $contentTypePath, array $structuredDataNodes = [], string $metadataPath = '', ):\stdClass
     {
         $pagePath = trim($pagePath, DIRECTORY_SEPARATOR);
         $pageName = basename($pagePath);
@@ -111,6 +111,7 @@ class PageUtilities{
             'name' => $pageName,
             'parentFolderPath' => $parentFolderPath,
             'contentTypePath' => $contentTypePath,
+            'metadataSetPath' => $metadataPath,
             'structuredData' => (object) [
                 'structuredDataNodes' => (object) [
                     'structuredDataNode' => $this->normalizeStructuredDataNodesArray($structuredDataNodes)
@@ -118,6 +119,8 @@ class PageUtilities{
             ]
         ];
     }
+
+
 
 
     /**
