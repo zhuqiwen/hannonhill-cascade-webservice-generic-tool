@@ -4,8 +4,7 @@ namespace Edu\IU\Framework\GenericUpdater\Utilities;
 
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentTypeContainer;
-use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSetContainer;
-use Edu\IU\Framework\GenericUpdater\Asset\Containered\PageConfigurationSetContainer;
+
 use Edu\IU\Wcms\WebService\WCMSClient;
 
 class ContentTypeUtilities implements UtilitiesInterface {
