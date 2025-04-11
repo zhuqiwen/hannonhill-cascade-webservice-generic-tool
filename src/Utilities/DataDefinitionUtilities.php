@@ -4,9 +4,11 @@ namespace Edu\IU\Framework\GenericUpdater\Utilities;
 
 
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\DataDefinition;
+use Edu\IU\Framework\GenericUpdater\Asset\Containered\DataDefinitionContainer;
+use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder;
 use Edu\IU\Wcms\WebService\WCMSClient;
 
-class DataDefinitionUtilities{
+class DataDefinitionUtilities implements UtilitiesInterface {
     use UtilitiesTraits;
 
     public function __construct(WCMSClient $wcms)
@@ -14,6 +16,9 @@ class DataDefinitionUtilities{
         $this->wcms = $wcms;
         $this->assetTypeFetch = ASSET_DATA_DEFINITION_FETCH;
         $this->containerTypeFetch = ASSET_CONTAINER_DATA_DEFINITION_FETCH;
+
+        $this->assetClassName = DataDefinition::class;
+        $this->assetContainerClassName = DataDefinitionContainer::class;
 
     }
 
@@ -99,6 +104,5 @@ class DataDefinitionUtilities{
 
 
     }
-
 
 }

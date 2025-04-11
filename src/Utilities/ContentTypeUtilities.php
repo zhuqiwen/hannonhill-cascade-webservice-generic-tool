@@ -2,6 +2,7 @@
 
 namespace Edu\IU\Framework\GenericUpdater\Utilities;
 
+use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentTypeContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSetContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\PageConfigurationSetContainer;
@@ -17,24 +18,8 @@ class ContentTypeUtilities implements UtilitiesInterface {
         $this->assetTypeFetch = ASSET_CONTENT_TYPE_FETCH;
         $this->containerTypeFetch = ASSET_CONTAINER_CONTENT_TYPE_FETCH;
 
-        $this->assetClassName = 'Edu\IU\Framework\GenericUpdater\Asset\Containered\ContentType';
+        $this->assetClassName = ContentType::class;
+        $this->assetContainerClassName = ContentTypeContainer::class;
     }
 
-    public function getAllInContainer(string $containerOrFolderPath): array
-    {
-        $result = [];
-
-        $container = new ContentTypeContainer($this->wcms, $containerOrFolderPath);
-
-        $children = $this->convertToArrayWhenOnly1Child($container);
-        foreach ($children as $child) {
-            $tmpResult = match ($child->type){
-                $this->containerTypeFetch => $this->getAllInContainer($child->path->path),
-                $this->assetTypeFetch => [$child],
-            };
-            $result = array_merge($result, $tmpResult);
-        }
-
-        return $result;
-    }
 }

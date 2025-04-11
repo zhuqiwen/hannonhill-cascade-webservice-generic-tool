@@ -8,6 +8,7 @@ use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSet;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\MetadataSetContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Containered\PageConfigurationSetContainer;
 use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Folder;
+use Edu\IU\Framework\GenericUpdater\Asset\Foldered\Page;
 use Edu\IU\Framework\GenericUpdater\Interfaces\StructuredDataNodeInterface;
 use Edu\IU\Wcms\WebService\WCMSClient;
 
@@ -20,33 +21,9 @@ class PageUtilities{
         $this->wcms = $wcms;
         $this->assetTypeFetch = ASSET_PAGE_FETCH;
         $this->containerTypeFetch = ASSET_FOLDER_FETCH;
+        $this->assetClassName = Page::class;
+        $this->assetContainerClassName = Folder::class;
 
-    }
-
-    /**
-     * This method scans all folders for pages in a site, so it can be slow when the site has a large number of pages
-     * for a site with ~2000 pages, it costs about 4~5 minutes
-     * @param string $containerOrFolderPath
-     * @return array
-     */
-    public function getAllInContainer(string $containerOrFolderPath): array
-    {
-        $result = [];
-
-        $container = new Folder($this->wcms, $containerOrFolderPath);
-
-        $children = $this->convertToArrayWhenOnly1Child($container);
-        foreach ($children as $child) {
-            $tmpResult = match ($child->type){
-                $this->containerTypeFetch => $this->getAllInContainer($child->path->path),
-                $this->assetTypeFetch => [$child],
-                //ignore files, blocks, and velocity formats
-                default => [],
-            };
-            $result = array_merge($result, $tmpResult);
-        }
-
-        return $result;
     }
 
     public function echoProgressCLI(int $cnt):void
