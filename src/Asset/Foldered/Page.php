@@ -78,6 +78,14 @@ class Page extends Folder {
         return $this->createAsset();
     }
 
+    public function getNewAssetWithNewStructuredDataNode(\stdClass | array $structuredDataNode): \stdClass
+    {
+        $newAsset = $this->getOldAsset();
+        $newAsset->structuredData->structuredDataNodes->structuredDataNode = $structuredDataNode;
+
+        return $newAsset;
+    }
+
 
 
 }
