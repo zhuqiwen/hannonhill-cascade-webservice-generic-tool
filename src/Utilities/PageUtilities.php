@@ -44,8 +44,14 @@ class PageUtilities{
         $this->setApiKey($apiKey);
 
 
-        return $this->getAllPagesRelatedTo([new MetadataSetUtilities($this->wcms), new ContentTypeUtilities($this->wcms)]);
-
+        $result = [];
+        $allPageInfo = $this->getAllPagesRelatedTo([new MetadataSetUtilities($this->wcms), new ContentTypeUtilities($this->wcms)]);
+        foreach($allPageInfo as $pageInfo){
+            if ($pageInfo->type == $this->assetTypeFetch && $pageInfo->path->siteName == $this->wcms->getSiteName()){
+                $result[$pageInfo->id] = $pageInfo;
+            }
+        }
+        return $result;
     }
 
     public function getAllPagesRelatedTo(array $arrayOfAssetUtilityObjects): array
@@ -58,9 +64,7 @@ class PageUtilities{
                 $asset = new $class($this->wcms, $assetInfo->path->path);
                 $subscribers = $asset->listSubscribers();
                 foreach ($subscribers as $subscriber) {
-                    if ($subscriber->type == $this->assetTypeFetch && $subscriber->path->siteName == $this->wcms->getSiteName()){
-                        $result[$subscriber->id] = $subscriber;
-                    }
+                    $result[$subscriber->id] = $subscriber;
                 }
             }
         }
