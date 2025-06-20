@@ -9,6 +9,8 @@ class ConstantsConstructor
         $siteName = trim($siteName);
         define("CLIENT_SITE_NAME", $siteName);
         define("WSDL", "https://sites.wcms.iu.edu/ws/services/AssetOperationService?wsdl");
+        define("WSDL_SITES", "http://wcmsap3.uits.iu.edu:8080/ws/services/AssetOperationService?wsdl");
+        define("WSDL_WCMS5", "'http://wcmsat5.uits.iu.edu:8080/ws/services/AssetOperationService?wsdl'");
         define("WSDL_BUILDER", "http://wcmsap6.uits.iu.edu:8080/ws/services/AssetOperationService?wsdl");
         define("DEBUG_MODE", true);
         define("ROOT_CLASS_NAME", "Edu\IU\Framework\GenericUpdater\Asset\Asset");
