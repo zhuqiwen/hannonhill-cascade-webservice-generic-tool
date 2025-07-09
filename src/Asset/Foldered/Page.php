@@ -43,13 +43,18 @@ class Page extends Folder {
 
     public function getOldStructuredDataNode():array | null
     {
-        $result = $this->getOldAsset()->structuredData->structuredDataNodes->structuredDataNode;
-        // not array, and is a stdClass, meaning there is either only one node, or the content type is using a wysiwyg editor
-        if (!is_array($result) && $result instanceof \stdClass){
-            $result = [$result];
+        $result = null;
+        $asset = $this->getOldAsset();
+        if ($asset->structuredData){
+            $result = $asset->structuredData->structuredDataNodes->structuredDataNode;
+            // not array, and is a stdClass, meaning there is either only one node, or the content type is using a wysiwyg editor
+            if (!is_array($result) && $result instanceof \stdClass){
+                $result = [$result];
+            }
         }
 
         return $result;
+
     }
 
     public function generateBasicAssetData(string $pagePath, string $contentTypePath):\stdClass
