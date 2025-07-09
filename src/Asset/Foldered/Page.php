@@ -41,7 +41,7 @@ class Page extends Folder {
 
     }
 
-    public function getOldStructuredDataNode():array
+    public function getOldStructuredDataNode():array | null
     {
         $result = $this->getOldAsset()->structuredData->structuredDataNodes->structuredDataNode;
         // not array, and is a stdClass, meaning there is either only one node, or the content type is using a wysiwyg editor
