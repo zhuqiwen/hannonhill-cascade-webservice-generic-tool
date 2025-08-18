@@ -69,6 +69,11 @@ class ConstantsConstructor
         define("ASSET_TEMPLATE_FETCH", "template");
         define("ASSET_SYMLINK_FETCH", "symlink");
         define("ASSET_EDITOR_CONFIGURATION_FETCH", "editorconfiguration");
+        define("ASSET_TRANSPORT_FETCH", "transport");
+        define("ASSET_TRANSPORT_FILE_SYSTEM_FETCH", "transport_fs");
+        define("ASSET_TRANSPORT_FTP_FETCH", "transport_ftp");
+        define("ASSET_TRANSPORT_DATABASE_FETCH", "transport_db");
+        define("ASSET_TRANSPORT_CLOUD_FETCH", "transport_cloud");
 
         define("ASSET_CONTAINER_PAGE_CONFIGURATION_SET_FETCH", "pageconfigurationsetcontainer");
         define("ASSET_CONTAINER_SHARED_FIELD_FETCH", "sharedfieldcontainer");
@@ -76,6 +81,7 @@ class ConstantsConstructor
         define("ASSET_CONTAINER_CONTENT_TYPE_FETCH", "contenttypecontainer");
         define("ASSET_CONTAINER_METADATA_SET_FETCH", "metadatasetcontainer");
         define("ASSET_CONTAINER_ASSET_FACTORY_FETCH", "assetfactorycontainer");
+        define("ASSET_CONTAINER_TRANSPORT_FETCH", "assetfactorycontainer");
     }
 
     private function defineAssetTypesForCreate()
@@ -105,6 +111,10 @@ class ConstantsConstructor
         define("ASSET_ASSET_FACTORY_CREATE", "assetFactory");
         define("ASSET_METADATA_SET_CREATE", "metadataSet");
         define("ASSET_PAGE_CONFIGURATION_SET_CREATE", "pageConfigurationSet");
+        define("ASSET_TRANSPORT_FILE_SYSTEM_CREATE", "fileSystemTransport");
+        define("ASSET_TRANSPORT_FTP_CREATE", "ftpTransport");
+        define("ASSET_TRANSPORT_DATABASE_CREATE", "databaseTransport");
+        define("ASSET_TRANSPORT_CLOUD_CREATE", "cloudTransport");
 
 
 
@@ -114,6 +124,7 @@ class ConstantsConstructor
         define("ASSET_CONTAINER_CONTENT_TYPE_CREATE", "contentTypeContainer");
         define("ASSET_CONTAINER_METADATA_SET_CREATE", "metadataSetContainer");
         define("ASSET_CONTAINER_ASSET_FACTORY_CREATE", "assetFactoryContainer");
+        define("ASSET_CONTAINER_TRANSPORT_CREATE", "transportContainer");
     }
 
 
