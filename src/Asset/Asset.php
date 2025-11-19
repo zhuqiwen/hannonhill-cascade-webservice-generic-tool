@@ -17,30 +17,34 @@ class Asset
         $this->siteName = $wcms->getSiteName();
 
 
+        match (true){
+            is_null($inputs) => $this->setOldAssetWithEmptyObj(),
+            is_string($inputs) && str_starts_with(trim($inputs), '{') => $this->setNewAssetWithJson($inputs),
+            is_array($inputs) || is_object($inputs) => $this->setNewAssetWithArrayOrObject($inputs),
+            default =>$this->setOldAssetWithAssetPath($inputs),
+        };
 
-        if(gettype($inputs) == "string" && !empty(trim($inputs)))
-        {
-            // this is payload in json
-            if(strpos(trim($inputs), '{') === 0)
-            {
-                $inputs = json_decode($inputs);
-                $this->setNewAsset($inputs);
-            }
-            // this is path to existing asset
-            else
-            {
-                $this->setOldAsset($inputs);
-            }
+    }
+    
+    private function setOldAssetWithEmptyObj():void
+    {
+        $this->oldAsset = new \stdClass();
+    }
+    private function setOldAssetWithAssetPath(string $path):void
+    {
+        $this->setOldAsset($path);
+    }
+    
+    private function setNewAssetWithJson(string $json):void
+    {
+        $inputs = json_decode($json);
+        $this->setNewAsset($inputs);
+    }
 
-
-        }
-
-        if(gettype($inputs) == "array" || is_object($inputs))
-        {
-            $inputs = json_decode(json_encode($inputs));
-            $this->setNewAsset($inputs);
-        }
-
+    private function setNewAssetWithArrayOrObject(array | object $inputs):void
+    {
+        $inputs = json_decode(json_encode($inputs));
+        $this->setNewAsset($inputs);
     }
 
     private function isValidJson(string $jsonString): bool
