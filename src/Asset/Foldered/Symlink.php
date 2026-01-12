@@ -26,10 +26,11 @@ class Symlink extends Folder {
             throw new InputIntegrityException($msg);
         }
 
-        if(!$isURL){
-            $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
-            $msg .= ", the value of [linkURL] should be a valid url.";
-            throw new InputIntegrityException($msg);
-        }
+        // comment this out, since in php filter_var fails a lot actual urls with special chars
+//        if(!$isURL){
+//            $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
+//            $msg .= ", the value of [linkURL] should be a valid url.";
+//            throw new InputIntegrityException($msg);
+//        }
     }
 }
