@@ -18,7 +18,7 @@ class Symlink extends Folder {
 
     public function checkIfSetLinkURL()
     {
-        $isURL = filter_var($this->newAsset->linkURL, FILTER_VALIDATE_URL);
+        $isURL = filter_var(trim($this->newAsset->linkURL), FILTER_VALIDATE_URL);
 
         if(!isset($this->newAsset->linkURL) || empty(trim($this->newAsset->linkURL))){
             $msg = "For " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
