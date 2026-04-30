@@ -209,7 +209,7 @@ trait AssetTrait
         return $this;
     }
 
-    public function updateAsset(): Asset
+    public function updateAsset(string $comment = ''): Asset
     {
 
         if(!isset($this->newAsset)){
@@ -226,6 +226,9 @@ trait AssetTrait
 
         try {
             $this->wcms->saveAsset($this->newAsset, $this->assetTypeCreate);
+            if ($comment != ''){
+                $this->wcms->addComment($comment, $this->getNewAssetPath(), $this->assetTypeFetch);
+            }
             $msg = "Asset: " . $this->assetTypeDisplay . " with path: " . $this->getNewAssetPath();
             $msg .= " has been updated successfully";
             $this->echoForCLI($msg);
