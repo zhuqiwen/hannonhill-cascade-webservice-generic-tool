@@ -33,52 +33,52 @@ trait MetadataTraits{
 
     }
 
-    public function getOldMetadataAuthor():string
+    public function getOldMetadataAuthor():string | null
     {
         return $this->getOldAsset()->metadata->author;
     }
 
-    public function getOldMetadataDisplayName():string
+    public function getOldMetadataDisplayName():string | null
     {
         return $this->getOldAsset()->metadata->displayName;
     }
 
-    public function getOldMetadataEndDate():string
+    public function getOldMetadataEndDate():string | null
     {
         return $this->getOldAsset()->metadata->endDate;
     }
 
-    public function getOldMetadataKeywords():string
+    public function getOldMetadataKeywords():string | null
     {
         return $this->getOldAsset()->metadata->keywords;
     }
 
-    public function getOldMetadataDescription():string
+    public function getOldMetadataDescription():string | null
     {
         return $this->getOldAsset()->metadata->metaDescription;
     }
 
-    public function getOldMetadataReviewDate():string
+    public function getOldMetadataReviewDate():string | null
     {
         return $this->getOldAsset()->metadata->reviewDate;
     }
 
-    public function getOldMetadataStartDate():string
+    public function getOldMetadataStartDate():string | null
     {
         return $this->getOldAsset()->metadata->startDate;
     }
 
-    public function getOldMetadataSummary():string
+    public function getOldMetadataSummary():string | null
     {
         return $this->getOldAsset()->metadata->summary;
     }
 
-    public function getOldMetadataTeaser():string
+    public function getOldMetadataTeaser():string | null
     {
         return $this->getOldAsset()->metadata->teaser;
     }
 
-    public function getOldMetadataTitle():string
+    public function getOldMetadataTitle():string | null
     {
         return $this->getOldAsset()->metadata->title;
     }
